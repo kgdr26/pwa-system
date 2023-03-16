@@ -1,0 +1,121 @@
+.col-3.cos {
+    max-width: 24.1%;
+}
+
+li.active {
+    background: #214162;
+}
+
+.form-label.fw-bold {
+    font-weight: bold !important;
+    color: #214162;
+}
+
+#viewer {
+    z-index: 0;
+    min-height: 40rem;
+}
+
+
+.col-8.roomtour{
+    max-width: 65.666667%;
+}
+
+.position-relative{
+    position: relative;
+}
+
+.position-absolut{
+    position: absolute;
+}
+
+.b-0{
+    bottom: 0rem;
+}
+
+.rating {
+	position: relative;
+	display: inline-block;
+	border: none;
+	font-size: 14px;
+	margin-bottom: 1rem;
+	transform: translateX(-50%);
+    left: 50%;
+}
+
+.rating input {
+	border: 0;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px);
+	clip: rect(1px, 1px, 1px, 1px);
+	opacity: 0;
+    cursor: pointer;
+}
+
+.rating label {
+	position: relative;
+	float: right;
+	color: #c8c8c8;
+    cursor: pointer;
+}
+
+.rating label {
+	margin: 5px;
+	display: inline-block;
+	font-size: 2em;
+	fill: #ccc;
+	user-select: none;
+}
+
+.rating label svg {
+	width: 5rem;
+	height: auto;
+}
+
+.rating input:checked ~ label svg path {
+	fill: #ffc107;
+}
+
+.rating label:hover ~ label svg path {
+	fill: #ffdb70;
+}
+
+.rating label:hover svg path {
+	fill: #ffc107;
+}
+
+.getar{
+	position: relative;
+    top: -0.1rem;
+    left: 0rem;
+    font-size: 2.5rem;
+    -webkit-animation: angetar 2s infinite;
+    animation: angetar 2s infinite
+}
+
+@-webkit-keyframes angetar {
+	0%, 50% {
+        transform: rotate(0);
+    }
+    1%, 10%, 20%, 30%, 40% {
+        transform: rotate(10deg);
+    }
+    5%, 15%, 25%, 35%, 45% {
+        transform: rotate(-10deg);
+    }
+}
+
+@keyframes angetar {
+	0%, 50% {
+        transform: rotate(0);
+    }
+    1%, 10%, 20%, 30%, 40% {
+        transform: rotate(10deg);
+    }
+    5%, 15%, 25%, 35%, 45% {
+        transform: rotate(-10deg);
+    }
+}
