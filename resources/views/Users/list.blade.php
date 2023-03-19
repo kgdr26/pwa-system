@@ -56,9 +56,9 @@
                 <!--end::Card title-->
 
                 <!--begin::Card toolbar-->
-                <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                <div class="card-toolbar flex-row-fluid justify-content-end gap-5" data-name="add_data">
                     <!--begin::Add product-->
-                    <a href="" class="btn btn-primary">
+                    <a href="#" class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                         </svg>
@@ -81,6 +81,7 @@
                             <th>NO</th>
                             <th>CODE</th>
                             <th>USER NAME</th>
+                            <th>NAMA LENGKAP</th>
                             <th>ALIAS</th>
                             <th>ROLE</th>
                             <th>EMAIL</th>
@@ -95,6 +96,7 @@
                         @foreach ($arr as $key => $val)
                             <tr>
                                 <td>1</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -117,49 +119,153 @@
 </div>
 <!--end::Post-->
 
+<div class="modal fade" id="add_data" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <div class="modal-content">
+            <div class="modal-header" id="">
+                <h2>Add New User</h2>
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <span class="svg-icon svg-icon-1">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body py-10 px-lg-17">
+                
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">NAMA LENGKAP</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="NAMA LENGKAP" data-name="name"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">ALIAS</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="ALIAS" data-name="alias"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">EMAIL</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="EMAIL" data-name="email"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">NO TLP/ HP</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="NO TLP/ HP" data-name="tlp"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">USERNMAE</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="USERNMAE" data-name="username"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">PASSWORD</span>
+                    </label>
+                    <input type="password" class="form-control form-control-solid" placeholder="PASSWORD" data-name="password"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">ROLE</span>
+                    </label>
+                    <select name="role_id" data-name="role_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Role..." class="form-select form-select-solid">
+                        <option value="">Select a Country...</option>
+                        @foreach ($role as $key => $val)
+                            <option value="{{$val->id}}">{{$val->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+            </div>
+            <div class="modal-footer flex-center">
+                <button type="button" class="btn btn-danger me-3" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" data-name="save_data" class="btn btn-primary">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-"use strict";
-var MainJSTable = function () {
-    // Shared variables
-    var table;
-    var datatable;
+    $(document).on("click", "[data-name='add_data']", function (e) {
+        // $('[data-name="code"]').val('');
+        // $('[data-name="name"]').val('');
+        $('#add_data').modal('show');
+    });
 
-    // Private functions
-    var initDatatable = function () {
-        datatable = $(table).DataTable({
-            "info": false,
-            'order': [],
-            'pageLength': 10,
-        });
-        datatable.on('draw', function () {
-            handleDeleteRows();
-        });
-    }
-
-    var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-search-table="search"]');
-        filterSearch.addEventListener('keyup', function (e) {
-            datatable.search(e.target.value).draw();
-        });
-    }
-
-    return {
-        init: function () {
-            table = document.querySelector('#main_table');
-
-            if (!table) {
-                return;
-            }
-
-            initDatatable();
-            handleSearchDatatable();
-        }
-    };
-}();
-
-KTUtil.onDOMContentLoaded(function () {
-    MainJSTable.init();
-});
 </script>
+
+<script>
+    "use strict";
+    var MainJSTable = function () {
+        // Shared variables
+        var table;
+        var datatable;
+
+        // Private functions
+        var initDatatable = function () {
+            datatable = $(table).DataTable({
+                "info": false,
+                'order': [],
+                'pageLength': 10,
+            });
+            datatable.on('draw', function () {
+                handleDeleteRows();
+            });
+        }
+
+        var handleSearchDatatable = () => {
+            const filterSearch = document.querySelector('[data-search-table="search"]');
+            filterSearch.addEventListener('keyup', function (e) {
+                datatable.search(e.target.value).draw();
+            });
+        }
+
+        return {
+            init: function () {
+                table = document.querySelector('#main_table');
+
+                if (!table) {
+                    return;
+                }
+
+                initDatatable();
+                handleSearchDatatable();
+            }
+        };
+    }();
+
+    KTUtil.onDOMContentLoaded(function () {
+        MainJSTable.init();
+    });
+</script>
+
+<script>
+
+    $('[name="role_id"]').select2();
+
+</script>
+
+{{-- <script src="https://preview.keenthemes.com/craft/assets/js/custom/utilities/modals/new-address.js"></script> --}}
 
 @stop

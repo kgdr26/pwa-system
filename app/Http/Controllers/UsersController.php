@@ -21,9 +21,11 @@ class UsersController extends Controller
     function Users()
     {
         $arr    = listusers();
+        $role   = listrole();
         $data = array(
             'title' => 'Users',
-            'arr'   => $arr
+            'arr'   => $arr,
+            'role'  => $role
         );
 
         return view('Users.list')->with($data);
