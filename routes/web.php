@@ -31,6 +31,11 @@ Route::get('role',['as'=> 'role','uses'=>'UsersController@Role']);
 Route::post('addrole',['as'=> 'addrole','uses'=>'UsersController@addRole']);
 Route::post('showdatarole',['as'=> 'showdatarole','uses'=>'UsersController@showDataRole']);
 
+//Entity
+Route::get('entity',['as'=> 'entity','uses'=>'EntityController@Entity']);
+
+//Customer
+Route::get('customer',['as'=> 'customer','uses'=>'CustomerController@Customer']);
 
 // Formulir
 Route::get('formulir',['as'=> 'formulir','uses'=>'FormulirController@Formulir']);

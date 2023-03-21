@@ -6,5 +6,9 @@
 @if (Route::currentRouteName()=='users')
     <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
     <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
-    {{-- <script src="https://preview.keenthemes.com/craft/assets/js/custom/utilities/modals/new-address.js"></script> --}}
+@endif
+
+@if (Route::currentRouteName()=='entity')
+    <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
 @endif

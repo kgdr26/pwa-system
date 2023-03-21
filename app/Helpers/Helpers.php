@@ -30,3 +30,29 @@ function listusers(){
 }
 
 //End Action Users
+
+// Action Entity
+function listentity(){
+    $arr   = DB::select("SELECT * FROM mst_entity");
+
+    return $arr;
+}
+
+// End Action Entity
+
+// Action Customer
+function listcustomer(){
+    $arr   = DB::select("SELECT * FROM mst_customer");
+
+    return $arr;
+}
+
+// End Action Customer
+
+// Action Customer Type
+function listcustomertype(){
+    $arr   = DB::select("SELECT * FROM mst_customer_type");
+
+    return $arr;
+}
+// End Action Customer Type

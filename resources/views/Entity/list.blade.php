@@ -7,16 +7,16 @@
         <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
             <!--begin::Title-->
             <h1 class="text-dark fw-bold my-1 fs-2">
-                Users <small class="text-muted fs-6 fw-normal ms-1"></small>
+                Entity <small class="text-muted fs-6 fw-normal ms-1"></small>
             </h1>
             <!--end::Title-->
 
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb fw-semibold fs-base my-1">
                 <li class="breadcrumb-item text-muted">
-                    <a href="" class="text-muted text-hover-primary">Users</a>
+                    <a href="" class="text-muted text-hover-primary">Entity</a>
                 </li>
-                <li class="breadcrumb-item text-muted">List Users </li>
+                <li class="breadcrumb-item text-muted">List Entity </li>
             </ul>
             <!--end::Breadcrumb-->
         </div>
@@ -62,7 +62,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                         </svg>
-                        Add Users
+                        Add Entity
                     </a>
                     <!--end::Add product-->
                 </div>
@@ -80,12 +80,11 @@
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th>NO</th>
                             <th>CODE</th>
-                            <th>USER NAME</th>
-                            <th>NAMA LENGKAP</th>
+                            <th>NAME</th>
                             <th>ALIAS</th>
-                            <th>ROLE</th>
                             <th>EMAIL</th>
-                            <th>NO TLP/ HP</th>
+                            <th>OWNER</th>
+                            <th>NO TLP</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
@@ -95,7 +94,6 @@
                     <tbody class="fw-semibold text-gray-600">
                         @foreach ($arr as $key => $val)
                             <tr>
-                                <td>1</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -123,7 +121,7 @@
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <div class="modal-content">
             <div class="modal-header" id="">
-                <h2>Add New User</h2>
+                <h2>Add New Entity</h2>
                 <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                     <span class="svg-icon svg-icon-1">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -140,9 +138,9 @@
                 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">NAMA LENGKAP</span>
+                        <span class="required">NAMA ENTITY</span>
                     </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="NAMA LENGKAP" data-name="name"/>
+                    <input type="text" class="form-control form-control-solid" placeholder="NAMA ENTITY" data-name="name"/>
                 </div>
 
                 <div class="d-flex flex-column mb-8 fv-row">
@@ -161,37 +159,17 @@
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">NO TLP/ HP</span>
+                        <span class="required">OWNER</span>
                     </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="NO TLP/ HP" data-name="tlp"/>
+                    <input type="text" class="form-control form-control-solid" placeholder="OWNER" data-name="owner"/>
                 </div>
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">USERNMAE</span>
+                        <span class="required">NO TLP</span>
                     </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="USERNMAE" data-name="username"/>
+                    <input type="text" class="form-control form-control-solid" placeholder="NO TLP" data-name="tlp"/>
                 </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">PASSWORD</span>
-                    </label>
-                    <input type="password" class="form-control form-control-solid" placeholder="PASSWORD" data-name="password"/>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">ROLE</span>
-                    </label>
-                    <select name="role_id" data-name="role_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Role..." class="form-select form-select-solid">
-                        <option value="">Select a Role...</option>
-                        @foreach ($role as $key => $val)
-                            <option value="{{$val->id}}">{{$val->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
 
             </div>
             <div class="modal-footer flex-center">
@@ -261,11 +239,7 @@
 </script>
 
 <script>
-
     $('[name="role_id"]').select2();
-
 </script>
-
-{{-- <script src="https://preview.keenthemes.com/craft/assets/js/custom/utilities/modals/new-address.js"></script> --}}
 
 @stop
