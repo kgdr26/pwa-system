@@ -65,7 +65,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link" href=""><span class="menu-icon">
+                    <a class="menu-link @if (Route::currentRouteName()=='formulir') active @endif" href="{{route('formulir')}}"><span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
                         <span class="svg-icon svg-icon-2">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +83,7 @@
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
-                    <a class="menu-link" href=""><span class="menu-icon">
+                    <a class="menu-link @if (Route::currentRouteName()=='project') active @endif" href="{{route('project')}}"><span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
                         <span class="svg-icon svg-icon-2">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,7 +165,7 @@
                 <!--end:Menu item-->
 
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if (Route::currentRouteName()=='customer') show @endif">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if (Route::currentRouteName()=='customer' || Route::currentRouteName()=='customertype') show @endif">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -199,7 +199,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="">
+                            <a class="menu-link @if (Route::currentRouteName()=='customertype') active @endif" href="{{route('customertype')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

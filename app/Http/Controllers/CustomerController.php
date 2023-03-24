@@ -33,5 +33,16 @@ class CustomerController extends Controller
         return view('Customer.list')->with($data);
     }
 
+    function CustomerType()
+    {
+        $arr    = listcustomertype();
+        $data = array(
+            'title' => 'Customer Type',
+            'arr'   => $arr
+        );
+
+        return view('Customer.type')->with($data);
+    }
+
 
 }

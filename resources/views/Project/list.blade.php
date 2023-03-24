@@ -7,21 +7,22 @@
         <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
             <!--begin::Title-->
             <h1 class="text-dark fw-bold my-1 fs-2">
-                Formulir <small class="text-muted fs-6 fw-normal ms-1"></small>
+                Project <small class="text-muted fs-6 fw-normal ms-1"></small>
             </h1>
             <!--end::Title-->
 
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb fw-semibold fs-base my-1">
                 <li class="breadcrumb-item text-muted">
-                    <a href="" class="text-muted text-hover-primary">Formulir</a>
+                    <a href="" class="text-muted text-hover-primary">Project</a>
                 </li>
-                <li class="breadcrumb-item text-muted">List Formulir </li>
+                <li class="breadcrumb-item text-muted">List Project </li>
             </ul>
             <!--end::Breadcrumb-->
         </div>
         <!--end::Info-->
     </div>
 </div>
+
 
 @stop

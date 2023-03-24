@@ -57,11 +57,19 @@
                 }
             });
         </script>
+        <script>
+            var delay = 500;
+            $(window).on('load', function() {
+                setTimeout(function(){
+                    $(".preloader").hide();
+                },delay);
+            });
+        </script>
         <!--end::Theme mode setup on page load-->
     </head>
     <!--end::Head-->
     <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">
-        <div class="preload-wrapper preloader" style="display: none;">
+        <div class="preload-wrapper preloader">
             <div id="preloader_3"></div>
         </div>
         <!--begin::Root-->

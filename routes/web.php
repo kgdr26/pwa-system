@@ -25,6 +25,12 @@ Route::get('logout', ['as'=>'logout','uses'=>'AuthController@logout']);
 // Dashboard
 Route::get('dashboard',['as'=> 'dashboard','uses'=>'DashboardController@Dashboard']);
 
+// Formulir
+Route::get('formulir',['as'=> 'formulir','uses'=>'FormulirController@Formulir']);
+
+// Project
+Route::get('project',['as'=> 'project','uses'=>'ProjectController@Project']);
+
 // Users
 Route::get('users',['as'=> 'users','uses'=>'UsersController@Users']);
 Route::get('role',['as'=> 'role','uses'=>'UsersController@Role']);
@@ -36,7 +42,4 @@ Route::get('entity',['as'=> 'entity','uses'=>'EntityController@Entity']);
 
 //Customer
 Route::get('customer',['as'=> 'customer','uses'=>'CustomerController@Customer']);
-
-// Formulir
-Route::get('formulir',['as'=> 'formulir','uses'=>'FormulirController@Formulir']);
-Route::get('formuliradd',['as'=> 'formuliradd','uses'=>'FormulirController@FormulirAdd']);
+Route::get('customertype',['as'=> 'customertype','uses'=>'CustomerController@CustomerType']);
