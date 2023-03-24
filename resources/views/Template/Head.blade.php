@@ -12,3 +12,33 @@
     <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
     <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
 @endif
+
+@if (Route::currentRouteName()=='customer')
+    <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
+@endif
+
+@if (Route::currentRouteName()=='customertype')
+    <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
+@endif
+
+@if (Route::currentRouteName()=='machine')
+    <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
+@endif
+
+@if (Route::currentRouteName()=='machinetype')
+    <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
+@endif
+
+@if (Route::currentRouteName()=='machinevendor')
+    <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
+@endif
+
+@if (Route::currentRouteName()=='machinemodel')
+    <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
+@endif

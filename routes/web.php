@@ -43,3 +43,9 @@ Route::get('entity',['as'=> 'entity','uses'=>'EntityController@Entity']);
 //Customer
 Route::get('customer',['as'=> 'customer','uses'=>'CustomerController@Customer']);
 Route::get('customertype',['as'=> 'customertype','uses'=>'CustomerController@CustomerType']);
+
+//Machine
+Route::get('machine',['as'=> 'machine','uses'=>'MachineController@Machine']);
+Route::get('machinetype',['as'=> 'machinetype','uses'=>'MachineController@MachineType']);
+Route::get('machinevendor',['as'=> 'machinevendor','uses'=>'MachineController@MachineVendor']);
+Route::get('machinemodel',['as'=> 'machinemodel','uses'=>'MachineController@MachineModel']);

@@ -56,19 +56,7 @@
                 </div>
             </form>
         </div>
-        <script>
-            jQuery(document).ready(function () {
-                jQuery('#vmap').vectorMap({
-                    map: 'indonesia_id',
-                    enableZoom: false,
-                    showTooltip: true,
-                    selectedColor: null,
-                    onRegionClick: function(event, code, region){
-                    event.preventDefault();
-                }
-                });
-            });
-        </script>
+
 
     </body>
 </html>
