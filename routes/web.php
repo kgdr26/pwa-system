@@ -30,6 +30,7 @@ Route::get('formulir',['as'=> 'formulir','uses'=>'FormulirController@Formulir'])
 
 // Project
 Route::get('project',['as'=> 'project','uses'=>'ProjectController@Project']);
+Route::post('projectadd',['as'=> 'projectadd','uses'=>'ProjectController@projectadd']);
 
 // Users
 Route::get('users',['as'=> 'users','uses'=>'UsersController@Users']);
@@ -51,6 +52,7 @@ Route::post('showdatatype',['as'=> 'showdatatype','uses'=>'CustomerController@sh
 
 //Machine
 Route::get('machine',['as'=> 'machine','uses'=>'MachineController@Machine']);
+Route::post('machineadd',['as'=> 'machineadd','uses'=>'MachineController@machineadd']);
 Route::get('machinetype',['as'=> 'machinetype','uses'=>'MachineController@MachineType']);
 Route::post('machinetypeadd',['as'=> 'machinetypeadd','uses'=>'MachineController@addtype']);
 Route::get('machinevendor',['as'=> 'machinevendor','uses'=>'MachineController@MachineVendor']);

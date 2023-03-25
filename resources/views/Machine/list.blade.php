@@ -91,7 +91,7 @@
                             <th>VENDOR</th>
                             <th>QR CODE</th>
                             <th>STATUS</th>
-                            <th>ACTION</th>
+                            <th class="text-center">ACTION</th>
                         </tr>
                     </thead>
                     <!--end::Table head-->
@@ -195,7 +195,7 @@
                     <select name="customer_id" data-name="customer_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
                         <option value="">Select a Customer...</option>
                         @foreach ($customer as $key => $val)
-                            <option value="{{$val->id}}">{{$val->name}}</option>
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -214,7 +214,7 @@
                     <select name="type_id" data-name="type_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Type..." class="form-select form-select-solid">
                         <option value="">Select a Type...</option>
                         @foreach ($type as $key => $val)
-                            <option value="{{$val->id}}">{{$val->name}}</option>
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -226,7 +226,7 @@
                     <select name="model_id" data-name="model_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Model..." class="form-select form-select-solid">
                         <option value="">Select a Model...</option>
                         @foreach ($model as $key => $val)
-                            <option value="{{$val->id}}">{{$val->name}}</option>
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -238,7 +238,7 @@
                     <select name="vendor_id" data-name="vendor_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Vendor..." class="form-select form-select-solid">
                         <option value="">Select a Vendor...</option>
                         @foreach ($vendor as $key => $val)
-                            <option value="{{$val->id}}">{{$val->name}}</option>
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -259,9 +259,62 @@
 
 <script>
     $(document).on("click", "[data-name='add_data']", function (e) {
-
+        $('[data-name="serial_no"]').val('');
+        $('[data-name="location_name"]').val('');
+        $('[data-name="location_adr"]').val('');
+        $('[data-name="customer_id"]').val('').trigger("change");
+        $('[data-name="lat_long"]').val('');
+        $('[data-name="type_id"]').val('').trigger("change");
+        $('[data-name="model_id"]').val('').trigger("change");
+        $('[data-name="vendor_id"]').val('').trigger("change");
         
         $('#add_data').modal('show');
+    });
+
+    $(document).on("click", "[data-name='save_data']", function (e) {
+
+        $('.preloader').show();
+        var serial_no       = $('[data-name="serial_no"]').val();
+        var location_name   = $('[data-name="location_name"]').val();
+        var location_adr    = $('[data-name="location_adr"]').val();
+        var customer_id     = $('[data-name="customer_id"]').val();
+        var lat_long        = $('[data-name="lat_long"]').val();
+        var type_id         = $('[data-name="type_id"]').val();
+        var model_id        = $('[data-name="model_id"]').val();
+        var vendor_id       = $('[data-name="vendor_id"]').val();
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('machineadd') }}",
+            data: {serial_no:serial_no,location_name:location_name,location_adr:location_adr,customer_id:customer_id,lat_long:lat_long,type_id:type_id,model_id:model_id,vendor_id:vendor_id},
+            cache: false,
+            success: function(data) {
+                console.log(data);
+                $('.preloader').hide();
+                Swal.fire({
+                    position:'center',
+                    title: 'Success!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((data) => {
+                    location.reload();
+                })
+            },            
+            error: function (data) {
+                $('.preloader').hide();
+                Swal.fire({
+                    position:'center',
+                    title: 'Action Not Valid!',
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    // timer: 1500
+                }).then((data) => {
+                    // location.reload();
+                })
+            }
+        });
+
     });
 </script>
 
@@ -312,18 +365,18 @@
 </script>
 
 <script>
-    $('[name="type_id"]').select2(
+    $('[name="type_id"]').select2({
         allowClear: false,
-    );
-    $('[name="model_id"]').select2(
+    });
+    $('[name="model_id"]').select2({
         allowClear: false,
-    );
-    $('[name="vendor_id"]').select2(
+    });
+    $('[name="vendor_id"]').select2({
         allowClear: false,
-    );
-    $('[name="customer_id"]').select2(
+    });
+    $('[name="customer_id"]').select2({
         allowClear: false,
-    );
+    });
 </script>
 
 

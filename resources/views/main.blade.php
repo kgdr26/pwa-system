@@ -61,6 +61,7 @@
             var delay = 500;
             $(window).on('load', function() {
                 setTimeout(function(){
+                    $('[data-search-table="search"]').val('');
                     $(".preloader").hide();
                 },delay);
             });

@@ -20,11 +20,38 @@ class ProjectController extends Controller
 {
     function Project()
     {
+        $arr        = listproject();
+        $customer   = listcustomer();
         $data = array(
-            'title' => 'Project'
+            'title' => 'Project',
+            'arr'   => $arr,
+            'customer'=> $customer
         );
 
         return view('Project.list')->with($data);
+    }
+
+    function projectadd(Request $request)
+    {
+        $customer_id  = $request['customer_id'];
+        $name       = $request['name'];
+        $is_active  = 1;
+        $update_by  = 1;
+
+        $countrows  = listproject();
+        $cn         = sprintf("%04d",(count($countrows)+1));
+
+        $data       = array('table'=>'mst_customer','whr'=>'id','id'=>$customer_id);
+        $asl        = cekdata($data);
+
+        $nm         = explode(' ', $name);
+        $skt        = autosingkat($nm);
+
+        $code       = $asl['row']->alias.'.'.$skt.'.'.$cn;
+
+        DB::insert("INSERT INTO mst_project (code,name,customer_id,is_active,update_by) values (?,?,?,?,?)", [$code,$name,$customer_id,$is_active,$update_by]);
+
+        return response('success');
     }
 
 }

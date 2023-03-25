@@ -87,3 +87,21 @@ function listtypemachine(){
     return $arr;
 }
 // End Action type Machine
+
+// Action type Machine
+function listproject(){
+    $arr   = DB::select("SELECT a.*, b.name AS customer_name, c.name AS entity_name FROM mst_project a LEFT JOIN mst_customer b ON a.customer_id=b.id LEFT JOIN mst_entity c ON b.entity_id=c.id");
+
+    return $arr;
+}
+// End Action type Machine
+
+
+function autosingkat($nm){
+    $arr    = '';
+    foreach($nm as $key => $val){
+        $arr    .= substr($val,0,1);
+    }
+
+    return $arr;
+}
