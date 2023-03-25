@@ -49,7 +49,7 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon--> 
-                        <input type="text" data-search-table="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search" />
+                        <input type="text" data-search-table="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search" value=""/>
                     </div>
                     <!--end::Search-->
                 </div>
@@ -86,24 +86,44 @@
                             <th>ROLE</th>
                             <th>EMAIL</th>
                             <th>NO TLP/ HP</th>
-                            <th>ACTION</th>
+                            <th>STATUS</th>
+                            <th class="text-center">ACTION</th>
                         </tr>
                     </thead>
                     <!--end::Table head-->
 
                     <!--begin::Table body-->
                     <tbody class="fw-semibold text-gray-600">
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($arr as $key => $val)
                             <tr>
-                                <td>1</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$no++}}</td>
+                                <td>{{strtoupper($val->code)}}</td>
+                                <td>{{$val->username}}</td>
+                                <td>{{strtoupper($val->name)}}</td>
+                                <td>{{$val->alias}}</td>
+                                <td>{{$val->role_name}}</td>
+                                <td>{{$val->email}}</td>
+                                <td>{{$val->tlp}}</td>
+                                <td>
+                                    @if ($val->is_active == 1)
+                                        <div class="badge badge-light-success">Active</div>
+                                    @else
+                                        <div class="badge badge-light-danger">Inactive</div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-info me-3" data-name="edit_data" data-item="{{$val->id}},{{$val->name}}">
+                                            Edit
+                                        </button>
+                                        <button type="button" data-name="save_data" class="btn btn-danger">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -208,9 +228,59 @@
 
 <script>
     $(document).on("click", "[data-name='add_data']", function (e) {
-        // $('[data-name="code"]').val('');
-        // $('[data-name="name"]').val('');
+        $('[data-name="name"]').val('');
+        $('[data-name="alias"]').val('');
+        $('[data-name="email"]').val('');
+        $('[data-name="tlp"]').val('');
+        $('[data-name="username"]').val('');
+        $('[data-name="password"]').val('');
+        $('[data-name="role_id"]').val('');
         $('#add_data').modal('show');
+    });
+
+    $(document).on("click", "[data-name='save_data']", function (e) {
+
+        $('.preloader').show();
+        var name        = $('[data-name="name"]').val();
+        var alias       = $('[data-name="alias"]').val();
+        var email       = $('[data-name="email"]').val();
+        var tlp         = $('[data-name="tlp"]').val();
+        var username    = $('[data-name="username"]').val();
+        var password    = $('[data-name="password"]').val();
+        var role_id     = $('[data-name="role_id"]').val();
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('adduser') }}",
+            data: {name:name,alias:alias,email:email,tlp:tlp,username:username,password:password,role_id:role_id},
+            cache: false,
+            success: function(data) {
+                // console.log(data);
+                $('.preloader').hide();
+                Swal.fire({
+                    position:'center',
+                    title: 'Success!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((data) => {
+                    location.reload();
+                })
+            },            
+            error: function (data) {
+                $('.preloader').hide();
+                Swal.fire({
+                    position:'center',
+                    title: 'Action Not Valid!',
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    // timer: 1500
+                }).then((data) => {
+                    // location.reload();
+                })
+            }
+        });
+
     });
 
 </script>

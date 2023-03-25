@@ -31,6 +31,35 @@ class UsersController extends Controller
         return view('Users.list')->with($data);
     }
 
+    function adduser(Request $request)
+    {
+        $name      = $request['name'];
+        $alias     = $request['alias'];
+        $email     = $request['email'];
+        $tlp       = $request['tlp'];
+        $username  = $request['username'];
+        $password  = $request['password'];
+        $pass      = Hash::make($password);
+        $role_id   = $request['role_id'];
+        $is_active  = 1;
+        $update_by  = 1;
+
+        $countrows  = listusers();
+        $cn         = sprintf("%04d",(count($countrows)+1));
+        $data       = array(
+            'id'    => $role_id,
+            'table' => 'mst_role',
+            'whr'   => 'id'
+        );
+        $rolecode   = cekdata($data);
+        $cd         = $rolecode['row']->code;
+        $code       = $cd.'-'.$cn;
+
+        DB::insert("INSERT INTO users (code,username,password,pass,name,alias,role_id,email,tlp,is_active,update_by) values (?,?,?,?,?,?,?,?,?,?,?)", [$code,$username,$password,$pass,$name,$alias,$role_id,$email,$tlp,$is_active,$update_by]);
+
+        return response('success');
+    }
+
     function Role()
     {
         $arr    = listrole();

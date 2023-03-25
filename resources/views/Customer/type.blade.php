@@ -95,8 +95,8 @@
                         @foreach ($arr as $key => $val)
                             <tr>
                                 <td>{{$no++}}</td>
-                                <td>{{$val->code}}</td>
-                                <td>{{$val->name}}</td>
+                                <td>{{strtoupper($val->code)}}</td>
+                                <td>{{strtoupper($val->name)}}</td>
                                 <td>
                                     @if ($val->is_active == 1)
                                         <div class="badge badge-light-success">Active</div>
@@ -240,7 +240,7 @@
 
         $.ajax({
             type: "POST",
-            url: "{{ route('addrole') }}",
+            url: "{{ route('addtype') }}",
             data: {code:code,name:name},
             cache: false,
             success: function(data) {
@@ -281,7 +281,7 @@
 
         $.ajax({
             type: "POST",
-            url: "{{ route('showdatarole') }}",
+            url: "{{ route('showdatatype') }}",
             data: {id:id},
             cache: false,
             success: function(data) {

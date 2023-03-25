@@ -29,5 +29,24 @@ class EntityController extends Controller
         return view('Entity.list')->with($data);
     }
 
+    function addentity(Request $request)
+    {
+        $name      = $request['name'];
+        $alias     = $request['alias'];
+        $email     = $request['email'];
+        $owner     = $request['owner'];
+        $tlp       = $request['tlp'];
+        $is_active  = 1;
+        $update_by  = 1;
+
+        $countrows  = listentity();
+        $cn         = sprintf("%04d",(count($countrows)+1));
+        $cd         = strtolower($alias);
+        $code       = $cd.'-'.$cn;
+
+        DB::insert("INSERT INTO mst_entity (code,name,alias,email,owner,tlp,is_active,update_by) values (?,?,?,?,?,?,?,?)", [$code,$name,$alias,$email,$owner,$tlp,$is_active,$update_by]);
+
+        return response('success');
+    }
 
 }

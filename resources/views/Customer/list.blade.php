@@ -81,27 +81,50 @@
                             <th>NO</th>
                             <th>CODE</th>
                             <th>NAME</th>
+                            <th>ALIAS</th>
                             <th>CUSTOMER TYPE</th>
                             <th>EMAIL</th>
                             <th>NO TLP/ HP</th>
                             <th>ENTITY</th>
-                            <th>ACTION</th>
+                            <th>STATUS</th>
+                            <th class="text-center">ACTION</th>
                         </tr>
                     </thead>
                     <!--end::Table head-->
 
                     <!--begin::Table body-->
                     <tbody class="fw-semibold text-gray-600">
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($arr as $key => $val)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$no++}}</td>
+                                <td>{{strtoupper($val->code)}}</td>
+                                <td>{{strtoupper($val->name)}}</td>
+                                <td>{{strtoupper($val->alias)}}</td>
+                                <td>{{strtoupper($val->name_type)}}</td>
+                                <td>{{$val->email}}</td>
+                                <td>{{$val->tlp}}</td>
+                                <td>{{strtoupper($val->name_entity)}}</td>
+                                <td>
+                                    @if ($val->is_active == 1)
+                                        <div class="badge badge-light-success">Active</div>
+                                    @else
+                                        <div class="badge badge-light-danger">Inactive</div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-info me-3" data-name="edit_data" data-item="{{$val->id}},{{$val->name}}">
+                                            Edit
+                                        </button>
+                                        <button type="button" data-name="save_data" class="btn btn-danger">
+                                            Delete
+                                        </button>
+                                    </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -142,6 +165,14 @@
                     </label>
                     <input type="text" class="form-control form-control-solid" placeholder="NAMA" data-name="name"/>
                 </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">ALIAS</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="ALIAS" data-name="alias"/>
+                </div>
+
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -196,11 +227,58 @@
 
 <script>
     $(document).on("click", "[data-name='add_data']", function (e) {
-        // $('[data-name="code"]').val('');
-        // $('[data-name="name"]').val('');
+        var name            = $('[data-name="name"]').val('');
+        var alias           = $('[data-name="alias"]').val('');
+        var customer_type   = $('[data-name="customer_type"]').val('');
+        var email           = $('[data-name="email"]').val('');
+        var tlp             = $('[data-name="tlp"]').val('');
+        var entity_id       = $('[data-name="entity_id"]').val('');
         $('#add_data').modal('show');
     });
 
+    $(document).on("click", "[data-name='save_data']", function (e) {
+
+        $('.preloader').show();
+        var name            = $('[data-name="name"]').val();
+        var alias           = $('[data-name="alias"]').val();
+        var customer_type   = $('[data-name="customer_type"]').val();
+        var email           = $('[data-name="email"]').val();
+        var tlp             = $('[data-name="tlp"]').val();
+        var entity_id       = $('[data-name="entity_id"]').val();
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('addcustomer') }}",
+            data: {name:name,alias:alias,customer_type:customer_type,email:email,tlp:tlp,entity_id:entity_id},
+            cache: false,
+            success: function(data) {
+                // console.log(data);
+                $('.preloader').hide();
+                Swal.fire({
+                    position:'center',
+                    title: 'Success!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((data) => {
+                    location.reload();
+                })
+            },            
+            error: function (data) {
+                $('.preloader').hide();
+                Swal.fire({
+                    position:'center',
+                    title: 'Action Not Valid!',
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    // timer: 1500
+                }).then((data) => {
+                    // location.reload();
+                })
+            }
+        });
+
+    });
 </script>
 
 <script>

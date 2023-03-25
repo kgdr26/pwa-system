@@ -113,7 +113,6 @@
                                             Delete
                                         </button>
                                     </div>
-                                    </div>
                                 </td>
                             </tr>
                         @endforeach

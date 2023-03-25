@@ -260,7 +260,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link @if (Route::currentRouteName()=='machinevendor') active @endif" href="{{route('machinevendor')}}">
+                            <a class="menu-link @if (Route::currentRouteName()=='machinemodel') active @endif" href="{{route('machinemodel')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -272,7 +272,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link @if (Route::currentRouteName()=='machinemodel') active @endif" href="{{route('machinemodel')}}">
+                            <a class="menu-link @if (Route::currentRouteName()=='machinevendor') active @endif" href="{{route('machinevendor')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

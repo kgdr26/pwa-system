@@ -79,12 +79,18 @@
                     <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th>NO</th>
-                            <th>CODE</th>
-                            <th>NAME</th>
-                            <th>CUSTOMER TYPE</th>
-                            <th>EMAIL</th>
-                            <th>NO TLP/ HP</th>
+                            <th>WS ID</th>
+                            <th>SERIAL NUMBER</th>
+                            <th>LOCATION NAME</th>
+                            <th>LOCATION ADDRESS</th>
+                            <th>CUSTOMER</th>
                             <th>ENTITY</th>
+                            <th>LAT LONG</th>
+                            <th>TYPE</th>
+                            <th>MODEL</th>
+                            <th>VENDOR</th>
+                            <th>QR CODE</th>
+                            <th>STATUS</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
@@ -92,16 +98,41 @@
 
                     <!--begin::Table body-->
                     <tbody class="fw-semibold text-gray-600">
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($arr as $key => $val)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$no++}}</td>
+                                <td>{{strtoupper($val->ws_id)}}</td>
+                                <td>{{$val->serial_no}}</td>
+                                <td>{{strtoupper($val->location_name)}}</td>
+                                <td>{{strtoupper($val->location_adr)}}</td>
+                                <td>{{strtoupper($val->name_customer)}}</td>
+                                <td>{{strtoupper($val->name_entity)}}</td>
+                                <td>{{$val->lat_long}}</td>
+                                <td>{{strtoupper($val->name_type)}}</td>
+                                <td>{{strtoupper($val->name_model)}}</td>
+                                <td>{{strtoupper($val->name_vendor)}}</td>
+                                <td>{{$val->qr_code}}</td>
+                                <td>
+                                    @if ($val->is_active == 1)
+                                        <div class="badge badge-light-success">Active</div>
+                                    @else
+                                        <div class="badge badge-light-danger">Inactive</div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-info me-3" data-name="edit_data" data-item="{{$val->id}},{{$val->ws_id}}">
+                                            Edit
+                                        </button>
+                                        <button type="button" data-name="save_data" class="btn btn-danger">
+                                            Delete
+                                        </button>
+                                    </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -116,6 +147,124 @@
     <!--end::Container-->
 </div>
 <!--end::Post-->
+
+<div class="modal fade" id="add_data" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <div class="modal-content">
+            <div class="modal-header" id="">
+                <h2>Add New Machine</h2>
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <span class="svg-icon svg-icon-1">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body py-10 px-lg-17">
+                
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">SERIAL NUMBER</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="SERIAL NUMBER" data-name="serial_no"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">LOCATION NAME</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="LOCATION NAME" data-name="location_name"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">LOCATION ADDRESS</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="LOCATION ADDRESS" data-name="location_adr"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">CUSTOMER</span>
+                    </label>
+                    <select name="customer_id" data-name="customer_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
+                        <option value="">Select a Customer...</option>
+                        @foreach ($customer as $key => $val)
+                            <option value="{{$val->id}}">{{$val->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">LAT LONG</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="LAT LONG" data-name="lat_long"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">TYPE</span>
+                    </label>
+                    <select name="type_id" data-name="type_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Type..." class="form-select form-select-solid">
+                        <option value="">Select a Type...</option>
+                        @foreach ($type as $key => $val)
+                            <option value="{{$val->id}}">{{$val->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">Model</span>
+                    </label>
+                    <select name="model_id" data-name="model_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Model..." class="form-select form-select-solid">
+                        <option value="">Select a Model...</option>
+                        @foreach ($model as $key => $val)
+                            <option value="{{$val->id}}">{{$val->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">Vendor</span>
+                    </label>
+                    <select name="vendor_id" data-name="vendor_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Vendor..." class="form-select form-select-solid">
+                        <option value="">Select a Vendor...</option>
+                        @foreach ($vendor as $key => $val)
+                            <option value="{{$val->id}}">{{$val->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+            </div>
+            <div class="modal-footer flex-center">
+                <button type="button" class="btn btn-danger me-3" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" data-name="save_data" class="btn btn-primary">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", "[data-name='add_data']", function (e) {
+
+        
+        $('#add_data').modal('show');
+    });
+</script>
+
 
 <script>
     "use strict";
@@ -160,6 +309,21 @@
     KTUtil.onDOMContentLoaded(function () {
         MainJSTable.init();
     });
+</script>
+
+<script>
+    $('[name="type_id"]').select2(
+        allowClear: false,
+    );
+    $('[name="model_id"]').select2(
+        allowClear: false,
+    );
+    $('[name="vendor_id"]').select2(
+        allowClear: false,
+    );
+    $('[name="customer_id"]').select2(
+        allowClear: false,
+    );
 </script>
 
 
