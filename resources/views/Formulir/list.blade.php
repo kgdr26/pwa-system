@@ -84,7 +84,7 @@
                             <th>PROJECT</th>
                             <th>CUSTOMER</th>
                             <th>ENTITY</th>
-                            <th>ACTIVE DATE</th>
+                            <th class="text-center">ACTIVE DATE</th>
                             <th>STATUS</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -104,8 +104,18 @@
                                 <td>{{strtoupper($val->project_name)}}</td>
                                 <td>{{strtoupper($val->customer_name)}}</td>
                                 <td>{{strtoupper($val->entity_name)}}</td>
-                                <td></td>
-                                <td></td>
+                                <td class="text-center">
+                                    {{$val->date_start_active}}<br>
+                                    s/d<br>
+                                    {{$val->date_start_active}}
+                                </td>
+                                <td>
+                                    @if ($val->is_active == 1)
+                                        <div class="badge badge-light-success">Active</div>
+                                    @else
+                                        <div class="badge badge-light-danger">Inactive</div>
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-info me-3" data-item="{{$val->id}}">
@@ -184,6 +194,30 @@
                     <input type="text" class="form-control form-control-solid datepicker" placeholder="Date End Active" data-name="date_end_active"/>
                 </div>
 
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">USER CONTENT</span>
+                    </label>
+                    <select name="user_id[]" data-name="user_id[]" data-control="select2"multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a User Content..." class="form-select form-select-solid">
+                        <option value="">Select a User Content...</option>
+                        @foreach ($user as $key => $val)
+                            <option value="{{$val->id}}">{{strtoupper($val->alias)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">ROLE APPROVAL</span>
+                    </label>
+                    <select name="role_id[]" data-name="role_id[]" data-control="select2"multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a Role Approval..." class="form-select form-select-solid">
+                        <option value="">Select a Role Approval...</option>
+                        @foreach ($role as $key => $val)
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
 
             </div>
             <div class="modal-footer flex-center">
@@ -202,6 +236,8 @@
     $(document).on("click", "[data-name='add_data']", function (e) {
         $('[data-name="judul"]').val('');
         $('[data-name="project_id"]').val('').trigger("change");
+        $('[data-name="user_id"]').val('').trigger("change");
+        $('[data-name="role_id"]').val('').trigger("change");
         $('[data-name="date_start_active"]').val('');
         $('[data-name="date_end_active"]').val('');
         $('#add_data').modal('show');
@@ -214,11 +250,13 @@
         var project_id = $('[data-name="project_id"]').val();
         var date_start_active = $('[data-name="date_start_active"]').val();
         var date_end_active = $('[data-name="date_end_active"]').val();
+        var user_id = $('[data-name="user_id[]"]').val();
+        var role_id = $('[data-name="role_id[]"]').val();
 
         $.ajax({
             type: "POST",
             url: "{{ route('formuliradd') }}",
-            data: {judul:judul,project_id:project_id,date_start_active:date_start_active,date_end_active:date_end_active},
+            data: {judul:judul,project_id:project_id,date_start_active:date_start_active,date_end_active:date_end_active,user_id:user_id,role_id:role_id},
             cache: false,
             success: function(data) {
                 console.log(data);

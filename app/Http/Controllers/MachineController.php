@@ -65,7 +65,7 @@ class MachineController extends Controller
         $data       = array('table'=>'mst_customer','whr'=>'id','id'=>$customer_id);
         $cs         = cekdata($data);
 
-        $qr_code    = 'MCH.'.$cn.'.'.date('ym').'.'.sprintf("%02d",($ty['row']->id)).'.'.sprintf("%02d",($md['row']->id)).'.'.sprintf("%02d",($vd['row']->id)).'.'.sprintf("%02d",($cs['row']->id));
+        $qr_code    = $cn.'.'.date('ym').'.'.sprintf("%02d",($ty['row']->id)).'.'.sprintf("%02d",($md['row']->id)).'.'.sprintf("%02d",($vd['row']->id)).'.'.sprintf("%02d",($cs['row']->id));
         $ws_id      = 'WS.'.$cn.'.'.date('ym');
 
         DB::insert("INSERT INTO mst_machine (ws_id,serial_no,location_name,location_adr,customer_id,lat_long,type_id,model_id,vendor_id,qr_code,is_active,update_by) values (?,?,?,?,?,?,?,?,?,?,?,?)", [$ws_id,$serial_no,$location_name,$location_adr,$customer_id,$lat_long,$type_id,$model_id,$vendor_id,$qr_code,$is_active,$update_by]);

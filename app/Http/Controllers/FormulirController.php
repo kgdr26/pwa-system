@@ -21,11 +21,15 @@ class FormulirController extends Controller
     function Formulir()
     {
         $arr        = listformulir();
+        $user       = listusers();
+        $role       = listrole();
         $project    = listproject();
         $data = array(
             'title'     => 'Forms',
             'arr'       => $arr,
-            'project'   => $project
+            'project'   => $project,
+            'user'      => $user,
+            'role'      => $role
         );
 
         return view('Formulir.list')->with($data);
@@ -37,6 +41,8 @@ class FormulirController extends Controller
         $project_id  = $request['project_id'];
         $date_start_active  = $request['date_start_active'];
         $date_end_active    = $request['date_end_active'];
+        $user_id    = json_encode($request['user_id']);
+        $role_id    = json_encode($request['role_id']);
         $is_active  = 1;
         $update_by  = 1;
 
@@ -51,7 +57,7 @@ class FormulirController extends Controller
 
         $code       = 'frm.'.$skt.'.'.$cn.'.'.date('ymd');
 
-        DB::insert("INSERT INTO trx_formulir (code,judul,project_id,date_start_active,date_end_active,is_active,update_by) values (?,?,?,?,?,?,?)", [$code,$judul,$project_id,$date_start_active,$date_end_active,$is_active,$update_by]);
+        DB::insert("INSERT INTO trx_formulir (code,judul,project_id,date_start_active,date_end_active,user_id,role_id,is_active,update_by) values (?,?,?,?,?,?,?,?,?)", [$code,$judul,$project_id,$date_start_active,$date_end_active,$user_id,$role_id,$is_active,$update_by]);
 
         return response('success');
     }
