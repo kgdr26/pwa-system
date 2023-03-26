@@ -24,9 +24,11 @@ Route::get('logout', ['as'=>'logout','uses'=>'AuthController@logout']);
 
 // Dashboard
 Route::get('dashboard',['as'=> 'dashboard','uses'=>'DashboardController@Dashboard']);
+Route::post('dashlocation',['as'=> 'dashlocation','uses'=>'DashboardController@dashlocation']);
 
 // Formulir
 Route::get('formulir',['as'=> 'formulir','uses'=>'FormulirController@Formulir']);
+Route::post('formuliradd',['as'=> 'formuliradd','uses'=>'FormulirController@formuliradd']);
 
 // Project
 Route::get('project',['as'=> 'project','uses'=>'ProjectController@Project']);

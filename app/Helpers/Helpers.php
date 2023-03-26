@@ -96,6 +96,14 @@ function listproject(){
 }
 // End Action type Machine
 
+// Action type Machine
+function listformulir(){
+    $arr   = DB::select("SELECT a.*, b.name AS project_name, c.alias AS customer_name, d.alias AS entity_name FROM trx_formulir a LEFT JOIN mst_project b ON a.project_id=b.id LEFT JOIN mst_customer c ON b.customer_id=c.id LEFT JOIN mst_entity d ON c.entity_id=d.id");
+
+    return $arr;
+}
+// End Action type Machine
+
 
 function autosingkat($nm){
     $arr    = '';

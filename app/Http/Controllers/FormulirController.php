@@ -20,20 +20,40 @@ class FormulirController extends Controller
 {
     function Formulir()
     {
+        $arr        = listformulir();
+        $project    = listproject();
         $data = array(
-            'title' => 'Forms'
+            'title'     => 'Forms',
+            'arr'       => $arr,
+            'project'   => $project
         );
 
         return view('Formulir.list')->with($data);
     }
 
-    function FormulirAdd()
+    function formuliradd(Request $request)
     {
-        $data = array(
-            'title' => 'Add Forms'
-        );
+        $judul       = $request['judul'];
+        $project_id  = $request['project_id'];
+        $date_start_active  = $request['date_start_active'];
+        $date_end_active    = $request['date_end_active'];
+        $is_active  = 1;
+        $update_by  = 1;
 
-        return view('Formulir.add')->with($data);
+        $countrows  = listformulir();
+        $cn         = sprintf("%04d",(count($countrows)+1));
+
+        $data       = array('table'=>'mst_project','whr'=>'id','id'=>$project_id);
+        $asl        = cekdata($data);
+
+        $nm         = explode(' ',  $asl['row']->name);
+        $skt        = autosingkat($nm);
+
+        $code       = 'frm.'.$skt.'.'.$cn.'.'.date('ymd');
+
+        DB::insert("INSERT INTO trx_formulir (code,judul,project_id,date_start_active,date_end_active,is_active,update_by) values (?,?,?,?,?,?,?)", [$code,$judul,$project_id,$date_start_active,$date_end_active,$is_active,$update_by]);
+
+        return response('success');
     }
 
 }
