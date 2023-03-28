@@ -24,10 +24,15 @@ class FormulirController extends Controller
         $user       = listusers();
         $role       = listrole();
         $project    = listproject();
+
+        $customer   = listcustomer();
+        $entity     = listentity();
         $data = array(
             'title'     => 'Forms',
             'arr'       => $arr,
             'project'   => $project,
+            'customer'  => $customer,
+            'entity'    => $entity,
             'user'      => $user,
             'role'      => $role
         );
@@ -61,5 +66,16 @@ class FormulirController extends Controller
 
         return response('success');
     }
+
+    function eform()
+    {
+        $arr        = listformulir();
+        $data = array(
+            'title'     => 'Forms',
+        );
+
+        return view('Formulir.eform')->with($data);
+    }
+
 
 }

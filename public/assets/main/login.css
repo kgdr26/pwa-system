@@ -2,26 +2,18 @@
     display: none;
 }
 
-.mapss{
-    width: 100%;
-    height: 100vh;
-}
-
-body{
-    position: relative;
-}
-
 .card-login{
-    position: absolute;
-    top: 20%;
-    left: 0;
-    right: 0;
-    margin: auto auto;
     padding: 1rem;
     width: 20%;
     height: auto;
     background: rgba(0, 171, 86, 0.466);;
     border-radius: 0.5rem;
+}
+
+@media screen and (width: 300px) {
+    .card-login{
+        width: 85%;
+    }
 }
 
 .logo{

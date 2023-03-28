@@ -81,7 +81,6 @@
                             <th>NO</th>
                             <th>CODE</th>
                             <th>JUDUL</th>
-                            <th>PROJECT</th>
                             <th>CUSTOMER</th>
                             <th>ENTITY</th>
                             <th class="text-center">ACTIVE DATE</th>
@@ -101,12 +100,9 @@
                                 <td>{{$no++}}</td>
                                 <td>{{strtoupper($val->code)}}</td>
                                 <td>{{strtoupper($val->judul)}}</td>
-                                <td>{{strtoupper($val->project_name)}}</td>
                                 <td>{{strtoupper($val->customer_name)}}</td>
                                 <td>{{strtoupper($val->entity_name)}}</td>
                                 <td class="text-center">
-                                    {{$val->date_start_active}}<br>
-                                    s/d<br>
                                     {{$val->date_start_active}}
                                 </td>
                                 <td>
@@ -170,12 +166,24 @@
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">PROJECT</span>
+                        <span class="required">Customer</span>
                     </label>
-                    <select name="project_id" data-name="project_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Project..." class="form-select form-select-solid">
-                        <option value="">Select a Project...</option>
-                        @foreach ($project as $key => $val)
-                            <option value="{{$val->id}}">{{strtoupper($val->code)}} - {{strtoupper($val->name)}}</option>
+                    <select name="customer_id" data-name="customer_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
+                        <option value="">Select a Customer...</option>
+                        @foreach ($customer as $key => $val)
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">Entity</span>
+                    </label>
+                    <select name="entity_id" data-name="entity_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Entity..." class="form-select form-select-solid">
+                        <option value="">Select a Entity...</option>
+                        @foreach ($entity as $key => $val)
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -185,13 +193,6 @@
                         <span class="required">DATE START ACTIVE</span>
                     </label>
                     <input type="text" class="form-control form-control-solid datepicker" placeholder="Date Start Active" data-name="date_start_active"/>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">DATE END ACTIVE</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid datepicker" placeholder="Date End Active" data-name="date_end_active"/>
                 </div>
 
                 <div class="d-flex flex-column mb-8 fv-row">

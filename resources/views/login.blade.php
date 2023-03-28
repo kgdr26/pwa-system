@@ -25,38 +25,39 @@
     </head>
 
     <body>
-        <div id="vmap" class="mapss"></div>
-        <div class="card-login">
 
-            @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ Session::get('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+            <div class="card-login">
 
-            <div class="logo">
-                <img src="{{asset('assets/plugin_tenp/logo.svg')}}" alt="Logo">
-            </div>
-            <div class="d-flex justify-content-center flex-wrap">
-                <p class="judul-1 mb-12">Progressive Web App</p>
-            </div>
-            <form action="{{route('dashboard')}}" method="GET" enctype="multipart/form-data">
-                @csrf
-                <div class="row mt-5">
-                    <div class="col-12 mb-3">
-                        <input type="text" class="form-control form-costum" placeholder="Username" name="username">
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ Session::get('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <div class="col-12 mb-3">
-                        <input type="password" class="form-control form-costum" placeholder="Password" name="password">
-                    </div>
-                    <div class="col-12 mt-3">
-                        <button type="submit" class="btn btn-login">Login</button>
-                    </div>
+                @endif
+
+                <div class="logo">
+                    <img src="{{asset('assets/plugin_tenp/logo.svg')}}" alt="Logo">
                 </div>
-            </form>
+                <div class="d-flex justify-content-center flex-wrap">
+                    <p class="judul-1 mb-12">Progressive Web App</p>
+                </div>
+                <form action="{{route('dashboard')}}" method="GET" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row mt-5">
+                        <div class="col-12 mb-3">
+                            <input type="text" class="form-control form-costum" placeholder="Username" name="username">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <input type="password" class="form-control form-costum" placeholder="Password" name="password">
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="btn btn-login">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-
 
     </body>
 </html>

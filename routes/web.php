@@ -29,6 +29,7 @@ Route::post('dashlocation',['as'=> 'dashlocation','uses'=>'DashboardController@d
 // Formulir
 Route::get('formulir',['as'=> 'formulir','uses'=>'FormulirController@Formulir']);
 Route::post('formuliradd',['as'=> 'formuliradd','uses'=>'FormulirController@formuliradd']);
+Route::get('eform',['as'=> 'eform','uses'=>'FormulirController@eform']);
 
 // Project
 Route::get('project',['as'=> 'project','uses'=>'ProjectController@Project']);
