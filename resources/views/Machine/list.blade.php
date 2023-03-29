@@ -166,7 +166,14 @@
                 </div>
             </div>
             <div class="modal-body py-10 px-lg-17">
-                
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">WSID</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid" placeholder="WSID" data-name="wsid"/>
+                </div>
+
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">SERIAL NUMBER</span>
@@ -194,6 +201,18 @@
                     </label>
                     <select name="customer_id" data-name="customer_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
                         <option value="">Select a Customer...</option>
+                        @foreach ($customer as $key => $val)
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">ENTITY</span>
+                    </label>
+                    <select name="entity_id" data-name="entity_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Entity..." class="form-select form-select-solid">
+                        <option value="">Select a Entity...</option>
                         @foreach ($customer as $key => $val)
                             <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
                         @endforeach

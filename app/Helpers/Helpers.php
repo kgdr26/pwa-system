@@ -104,6 +104,14 @@ function listformulir(){
 }
 // End Action type Machine
 
+// Action service base
+function listservicebase(){
+    $arr   = DB::select("SELECT * FROM mst_service_base");
+
+    return $arr;
+}
+// End Action service base
+
 
 function autosingkat($nm){
     $arr    = '';

@@ -83,9 +83,6 @@
                             <th>NAME</th>
                             <th>ALIAS</th>
                             <th>CUSTOMER TYPE</th>
-                            <th>EMAIL</th>
-                            <th>NO TLP/ HP</th>
-                            <th>ENTITY</th>
                             <th>STATUS</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -104,9 +101,6 @@
                                 <td>{{strtoupper($val->name)}}</td>
                                 <td>{{strtoupper($val->alias)}}</td>
                                 <td>{{strtoupper($val->name_type)}}</td>
-                                <td>{{$val->email}}</td>
-                                <td>{{$val->tlp}}</td>
-                                <td>{{strtoupper($val->name_entity)}}</td>
                                 <td>
                                     @if ($val->is_active == 1)
                                         <div class="badge badge-light-success">Active</div>
@@ -181,32 +175,6 @@
                     <select name="customer_type" data-name="customer_type" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer Type..." class="form-select form-select-solid">
                         <option value="">Select a Customer Type...</option>
                         @foreach ($type as $key => $val)
-                            <option value="{{$val->id}}">{{$val->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">EMAIL</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="EMAIL" data-name="email"/>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">NO TLP</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="NO TLP" data-name="tlp"/>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">ENTITY</span>
-                    </label>
-                    <select name="entity_id" data-name="entity_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Entity..." class="form-select form-select-solid">
-                        <option value="">Select a Entity...</option>
-                        @foreach ($entity as $key => $val)
                             <option value="{{$val->id}}">{{$val->name}}</option>
                         @endforeach
                     </select>

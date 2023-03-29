@@ -63,6 +63,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('machinevendoradd',['as'=> 'machinevendoradd','uses'=>'MachineController@addvendor']);
     Route::get('machinemodel',['as'=> 'machinemodel','uses'=>'MachineController@MachineModel']);
     Route::post('machinemodeladd',['as'=> 'machinemodeladd','uses'=>'MachineController@addmodel']);
+
+    //Service Base
+    Route::get('servicebase',['as'=> 'servicebase','uses'=>'ServicebaseController@Servicebase']);
+    Route::post('addservicebase',['as'=> 'addservicebase','uses'=>'ServicebaseController@addservicebase']);
    
     Route::get('logout', ['as'=>'logout','uses'=>'AuthController@logout']);
 });
