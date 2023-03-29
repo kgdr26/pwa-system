@@ -16,7 +16,7 @@ class AuthController extends Controller
     function showFormLogin(Type $var = null)
     {
         if(Auth::check()){
-            return redirect('/Dashboard');
+            return redirect('/dashboard');
         }
         return view('login');
     }

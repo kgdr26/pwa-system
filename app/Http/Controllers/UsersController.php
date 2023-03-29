@@ -38,8 +38,8 @@ class UsersController extends Controller
         $email     = $request['email'];
         $tlp       = $request['tlp'];
         $username  = $request['username'];
-        $password  = $request['password'];
-        $pass      = Hash::make($password);
+        $pass      = $request['password'];
+        $password  = Hash::make($pass);
         $role_id   = $request['role_id'];
         $is_active  = 1;
         $update_by  = 1;
@@ -55,7 +55,7 @@ class UsersController extends Controller
         $cd         = $rolecode['row']->code;
         $code       = $cd.'-'.$cn;
 
-        DB::insert("INSERT INTO users (code,username,password,pass,name,alias,role_id,email,tlp,is_active,update_by) values (?,?,?,?,?,?,?,?,?,?,?)", [$code,$username,$password,$pass,$name,$alias,$role_id,$email,$tlp,$is_active,$update_by]);
+        DB::insert("INSERT INTO users (code,username,pass,password,name,alias,role_id,email,tlp,is_active,update_by) values (?,?,?,?,?,?,?,?,?,?,?)", [$code,$username,$pass,$password,$name,$alias,$role_id,$email,$tlp,$is_active,$update_by]);
 
         return response('success');
     }

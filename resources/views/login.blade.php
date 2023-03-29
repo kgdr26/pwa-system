@@ -42,7 +42,7 @@
                 <div class="d-flex justify-content-center flex-wrap">
                     <p class="judul-1 mb-12">Progressive Web App</p>
                 </div>
-                <form action="{{route('dashboard')}}" method="GET" enctype="multipart/form-data">
+                <form action="{{route('login_post')}}" method="POST">
                     @csrf
                     <div class="row mt-5">
                         <div class="col-12 mb-3">
