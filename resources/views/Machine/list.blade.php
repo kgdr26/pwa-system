@@ -79,10 +79,9 @@
                     <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th>NO</th>
-                            <th>WS ID</th>
+                            <th>WSID</th>
                             <th>SERIAL NUMBER</th>
                             <th>LOCATION NAME</th>
-                            <th>LOCATION ADDRESS</th>
                             <th>CUSTOMER</th>
                             <th>ENTITY</th>
                             <th>LAT LONG</th>
@@ -104,10 +103,9 @@
                         @foreach ($arr as $key => $val)
                             <tr>
                                 <td>{{$no++}}</td>
-                                <td>{{strtoupper($val->ws_id)}}</td>
+                                <td>{{strtoupper($val->wsid)}}</td>
                                 <td>{{$val->serial_no}}</td>
                                 <td>{{strtoupper($val->location_name)}}</td>
-                                <td>{{strtoupper($val->location_adr)}}</td>
                                 <td>{{strtoupper($val->name_customer)}}</td>
                                 <td>{{strtoupper($val->name_entity)}}</td>
                                 <td>{{$val->lat_long}}</td>
@@ -124,7 +122,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-info me-3" data-name="edit_data" data-item="{{$val->id}},{{$val->ws_id}}">
+                                        <button type="button" class="btn btn-info me-3" data-name="edit_data" data-item="{{$val->id}},{{$val->wsid}}">
                                             Edit
                                         </button>
                                         <button type="button" data-name="save_data" class="btn btn-danger">
@@ -167,25 +165,92 @@
             </div>
             <div class="modal-body py-10 px-lg-17">
 
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">WSID</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="WSID" data-name="wsid"/>
+                <div class="row mb-5">
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">WSID</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="WSID" data-name="wsid"/>
+                    </div>
+
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">SERIAL NUMBER</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="SERIAL NUMBER" data-name="serial_no"/>
+                    </div>
                 </div>
 
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">SERIAL NUMBER</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="SERIAL NUMBER" data-name="serial_no"/>
+                <div class="row mb-5">
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">CUSTOMER</span>
+                        </label>
+                        <select name="customer_id" data-name="customer_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
+                            <option value="">Select a Customer...</option>
+                            @foreach ($customer as $key => $val)
+                                <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">ENTITY</span>
+                        </label>
+                        <select name="entity_id" data-name="entity_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Entity..." class="form-select form-select-solid">
+                            <option value="">Select a Entity...</option>
+                            @foreach ($entity as $key => $val)
+                                <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">LOCATION NAME</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="LOCATION NAME" data-name="location_name"/>
+                <div class="row mb-5">
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">TYPE</span>
+                        </label>
+                        <select name="type_id" data-name="type_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Type..." class="form-select form-select-solid">
+                            <option value="">Select a Type...</option>
+                            @foreach ($type as $key => $val)
+                                <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">Model</span>
+                        </label>
+                        <select name="model_id" data-name="model_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Model..." class="form-select form-select-solid">
+                            <option value="">Select a Model...</option>
+                            @foreach ($model as $key => $val)
+                                <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">Vendor</span>
+                        </label>
+                        <select name="vendor_id" data-name="vendor_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Vendor..." class="form-select form-select-solid">
+                            <option value="">Select a Vendor...</option>
+                            @foreach ($vendor as $key => $val)
+                                <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">LOCATION NAME</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="LOCATION NAME" data-name="location_name"/>
+                    </div>
                 </div>
 
                 <div class="d-flex flex-column mb-8 fv-row">
@@ -197,71 +262,10 @@
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">CUSTOMER</span>
-                    </label>
-                    <select name="customer_id" data-name="customer_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
-                        <option value="">Select a Customer...</option>
-                        @foreach ($customer as $key => $val)
-                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">ENTITY</span>
-                    </label>
-                    <select name="entity_id" data-name="entity_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Entity..." class="form-select form-select-solid">
-                        <option value="">Select a Entity...</option>
-                        @foreach ($customer as $key => $val)
-                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">LAT LONG</span>
                     </label>
                     <input type="text" class="form-control form-control-solid" placeholder="LAT LONG" data-name="lat_long"/>
                 </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">TYPE</span>
-                    </label>
-                    <select name="type_id" data-name="type_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Type..." class="form-select form-select-solid">
-                        <option value="">Select a Type...</option>
-                        @foreach ($type as $key => $val)
-                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">Model</span>
-                    </label>
-                    <select name="model_id" data-name="model_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Model..." class="form-select form-select-solid">
-                        <option value="">Select a Model...</option>
-                        @foreach ($model as $key => $val)
-                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">Vendor</span>
-                    </label>
-                    <select name="vendor_id" data-name="vendor_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Vendor..." class="form-select form-select-solid">
-                        <option value="">Select a Vendor...</option>
-                        @foreach ($vendor as $key => $val)
-                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
 
             </div>
             <div class="modal-footer flex-center">
@@ -278,10 +282,12 @@
 
 <script>
     $(document).on("click", "[data-name='add_data']", function (e) {
+        $('[data-name="wsid"]').val('');
         $('[data-name="serial_no"]').val('');
         $('[data-name="location_name"]').val('');
         $('[data-name="location_adr"]').val('');
         $('[data-name="customer_id"]').val('').trigger("change");
+        $('[data-name="entity_id"]').val('').trigger("change");
         $('[data-name="lat_long"]').val('');
         $('[data-name="type_id"]').val('').trigger("change");
         $('[data-name="model_id"]').val('').trigger("change");
@@ -293,10 +299,12 @@
     $(document).on("click", "[data-name='save_data']", function (e) {
 
         $('.preloader').show();
+        var wsid            = $('[data-name="wsid"]').val();
         var serial_no       = $('[data-name="serial_no"]').val();
         var location_name   = $('[data-name="location_name"]').val();
         var location_adr    = $('[data-name="location_adr"]').val();
         var customer_id     = $('[data-name="customer_id"]').val();
+        var entity_id       = $('[data-name="entity_id"]').val();
         var lat_long        = $('[data-name="lat_long"]').val();
         var type_id         = $('[data-name="type_id"]').val();
         var model_id        = $('[data-name="model_id"]').val();
@@ -305,7 +313,7 @@
         $.ajax({
             type: "POST",
             url: "{{ route('machineadd') }}",
-            data: {serial_no:serial_no,location_name:location_name,location_adr:location_adr,customer_id:customer_id,lat_long:lat_long,type_id:type_id,model_id:model_id,vendor_id:vendor_id},
+            data: {wsid:wsid,serial_no:serial_no,location_name:location_name,location_adr:location_adr,customer_id:customer_id,entity_id:entity_id,lat_long:lat_long,type_id:type_id,model_id:model_id,vendor_id:vendor_id},
             cache: false,
             success: function(data) {
                 console.log(data);

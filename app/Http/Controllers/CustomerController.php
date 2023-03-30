@@ -21,13 +21,11 @@ class CustomerController extends Controller
     function Customer()
     {
         $arr    = listcustomer();
-        $entity = listentity();
         $type   = listcustomertype();
         $data = array(
             'title' => 'Customer',
             'arr'   => $arr,
-            'type'  => $type,
-            'entity'=> $entity
+            'type'  => $type
         );
 
         return view('Customer.list')->with($data);
@@ -40,16 +38,15 @@ class CustomerController extends Controller
         $customer_type  = $request['customer_type'];
         $email          = $request['email'];
         $tlp            = $request['tlp'];
-        $entity_id      = $request['entity_id'];
         $is_active      = 1;
-        $update_by      = 1;
+        $update_by      = auth::user()->id;
 
         $countrows  = listcustomer();
         $cn         = sprintf("%04d",(count($countrows)+1));
         $cd         = strtolower($alias);
-        $code       = $cd.'-'.$cn;
+        $code       = $cd.'.'.$cn;
 
-        DB::insert("INSERT INTO mst_customer (code,name,alias,customer_type,email,tlp,entity_id,is_active,update_by) values (?,?,?,?,?,?,?,?,?)", [$code,$name,$alias,$customer_type,$email,$tlp,$entity_id,$is_active,$update_by]);
+        DB::insert("INSERT INTO mst_customer (code,name,alias,customer_type,email,tlp,is_active,update_by) values (?,?,?,?,?,?,?,?)", [$code,$name,$alias,$customer_type,$email,$tlp,$is_active,$update_by]);
 
         return response('success');
     }
@@ -70,11 +67,11 @@ class CustomerController extends Controller
         $code       = $request['code'];
         $name       = $request['name'];
         $is_active  = 1;
-        $update_by  = 1;
+        $update_by  = auth::user()->id;
 
         $countrows  = listcustomertype();
         $cn         = sprintf("%04d",(count($countrows)+1));
-        $code       = $code.'-'.$cn;
+        $code       = $code.'.'.$cn;
 
         DB::insert("INSERT INTO mst_customer_type (code,name,is_active,update_by) values (?,?,?,?)", [$code,$name,$is_active,$update_by]);
 

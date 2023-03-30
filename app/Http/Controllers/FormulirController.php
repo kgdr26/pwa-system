@@ -23,14 +23,40 @@ class FormulirController extends Controller
         $arr        = listformulir();
         $user       = listusers();
         $role       = listrole();
-        $project    = listproject();
-
         $customer   = listcustomer();
         $entity     = listentity();
+
+        foreach ($arr as $key => $row) {
+            $arr[$key]->cus_alias = [];
+            $arr[$key]->ent_alias = [];
+        }
+
+        if(!empty($arr)){
+            foreach ($arr as $key => $row) {
+                $mn = json_decode($row->customer_id);
+                if(!empty($mn)){
+                    foreach ($mn as $k => $value) {
+                        $cus_alias = collect(\DB::select("SELECT alias FROM mst_customer WHERE id = '$value'"))->first();
+                        $cus_alias = strtoupper($cus_alias->alias);
+                        $arr[$key]->cus_alias[] = $cus_alias.',';
+                    }
+                }
+
+                $nt = json_decode($row->entity_id);
+                if(!empty($nt)){
+                    foreach ($nt as $k => $value) {
+                        $ent_alias = collect(\DB::select("SELECT alias FROM mst_entity WHERE id = '$value'"))->first();
+                        $ent_alias = strtoupper($ent_alias->alias);
+                        $arr[$key]->ent_alias[] = $ent_alias.',';
+                    }
+                }
+            }
+        }
+
+
         $data = array(
             'title'     => 'Forms',
             'arr'       => $arr,
-            'project'   => $project,
             'customer'  => $customer,
             'entity'    => $entity,
             'user'      => $user,
@@ -42,27 +68,22 @@ class FormulirController extends Controller
 
     function formuliradd(Request $request)
     {
-        $judul       = $request['judul'];
-        $project_id  = $request['project_id'];
-        $date_start_active  = $request['date_start_active'];
-        $date_end_active    = $request['date_end_active'];
-        $user_id    = json_encode($request['user_id']);
-        $role_id    = json_encode($request['role_id']);
-        $is_active  = 1;
-        $update_by  = 1;
 
-        $countrows  = listformulir();
-        $cn         = sprintf("%04d",(count($countrows)+1));
+        $judul          = $request['judul'];
+        $user_id        = json_encode($request['user_id']);
+        $role_id        = json_encode($request['role_id']);
+        $entity_id      = json_encode($request['entity_id']);
+        $customer_id    = json_encode($request['customer_id']);
+        $active_date    = $request['active_date'];
+        $is_active      = 1;
+        $update_by      = auth::user()->id;
 
-        $data       = array('table'=>'mst_project','whr'=>'id','id'=>$project_id);
-        $asl        = cekdata($data);
+        $countrows      = listformulir();
+        $cn             = sprintf("%04d",(count($countrows)+1));
 
-        $nm         = explode(' ',  $asl['row']->name);
-        $skt        = autosingkat($nm);
+        $code           = 'frm.'.date('ymd').'.'.$cn;
 
-        $code       = 'frm.'.$skt.'.'.$cn.'.'.date('ymd');
-
-        DB::insert("INSERT INTO trx_formulir (code,judul,project_id,date_start_active,date_end_active,user_id,role_id,is_active,update_by) values (?,?,?,?,?,?,?,?,?)", [$code,$judul,$project_id,$date_start_active,$date_end_active,$user_id,$role_id,$is_active,$update_by]);
+        DB::insert("INSERT INTO trx_formulir (code,judul,active_date,user_id,role_id,entity_id,customer_id,is_active,update_by) values (?,?,?,?,?,?,?,?,?)", [$code,$judul,$active_date,$user_id,$role_id,$entity_id,$customer_id,$is_active,$update_by]);
 
         return response('success');
     }

@@ -23,7 +23,7 @@ function listrole(){
 
 //Action Users
 function listusers(){
-    $arr   = DB::select("SELECT a.*, b.name AS role_name FROM users a LEFT JOIN mst_role b ON a.role_id=b.id");
+    $arr   = DB::select("SELECT a.*, b.name AS role_name, c.city, c.region FROM users a LEFT JOIN mst_role b ON a.role_id=b.id LEFT JOIN mst_service_base c ON a.id_service_base=c.id");
 
     return $arr;
 }
@@ -41,7 +41,7 @@ function listentity(){
 
 // Action Customer
 function listcustomer(){
-    $arr   = DB::select("SELECT a.*, b.name AS name_type, c.alias AS name_entity FROM mst_customer a LEFT JOIN mst_customer_type b ON a.customer_type=b.id LEFT JOIN mst_entity c ON a.entity_id=c.id");
+    $arr   = DB::select("SELECT a.*, b.name AS name_type FROM mst_customer a LEFT JOIN mst_customer_type b ON a.customer_type=b.id");
 
     return $arr;
 }
@@ -58,7 +58,7 @@ function listcustomertype(){
 
 // Action Machine
 function listmachine(){
-    $arr   = DB::select("SELECT a.*, b.name AS name_type, c.name AS name_model, d.name AS name_vendor, e.alias AS name_customer, f.alias AS name_entity FROM mst_machine a LEFT JOIN mst_machine_type b ON a.type_id=b.id LEFT JOIN mst_machine_model c ON a.model_id=c.id LEFT JOIN mst_machine_vendor d ON a.vendor_id=d.id LEFT JOIN mst_customer e ON a.customer_id=e.id LEFT JOIN mst_entity f ON e.entity_id=f.id");
+    $arr   = DB::select("SELECT a.*, b.name AS name_type, c.name AS name_model, d.name AS name_vendor, e.alias AS name_customer, f.alias AS name_entity FROM mst_machine a LEFT JOIN mst_machine_type b ON a.type_id=b.id LEFT JOIN mst_machine_model c ON a.model_id=c.id LEFT JOIN mst_machine_vendor d ON a.vendor_id=d.id LEFT JOIN mst_customer e ON a.customer_id=e.id LEFT JOIN mst_entity f ON a.customer_id=f.id");
 
     return $arr;
 }
@@ -98,7 +98,7 @@ function listproject(){
 
 // Action type Machine
 function listformulir(){
-    $arr   = DB::select("SELECT a.*, b.name AS project_name, c.alias AS customer_name, d.alias AS entity_name FROM trx_formulir a LEFT JOIN mst_project b ON a.project_id=b.id LEFT JOIN mst_customer c ON b.customer_id=c.id LEFT JOIN mst_entity d ON c.entity_id=d.id");
+    $arr   = DB::select("SELECT * FROM trx_formulir");
 
     return $arr;
 }

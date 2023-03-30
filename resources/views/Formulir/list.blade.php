@@ -100,10 +100,22 @@
                                 <td>{{$no++}}</td>
                                 <td>{{strtoupper($val->code)}}</td>
                                 <td>{{strtoupper($val->judul)}}</td>
-                                <td>{{strtoupper($val->customer_name)}}</td>
-                                <td>{{strtoupper($val->entity_name)}}</td>
+                                <td>
+                                    @if ($val->cus_alias != null)
+                                        @foreach ($val->cus_alias as $row)
+                                            {{$row}}
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($val->ent_alias != null)
+                                        @foreach ($val->ent_alias as $row)
+                                            {{$row}}
+                                        @endforeach
+                                    @endif
+                                </td>
                                 <td class="text-center">
-                                    {{$val->date_start_active}}
+                                    {{$val->active_date}}
                                 </td>
                                 <td>
                                     @if ($val->is_active == 1)
@@ -114,9 +126,9 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-info me-3" data-item="{{$val->id}}">
+                                        <a href="{{route('eform', ['id'=>$val->id])}}" class="btn btn-info me-3">
                                             Show Form
-                                        </button>
+                                        </a>
                                         <button type="button" data-name="save_data" class="btn btn-danger">
                                             Delete
                                         </button>
@@ -159,16 +171,16 @@
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">JUDUL</span>
+                        <span class="required">Form Name</span>
                     </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Judul" data-name="judul"/>
+                    <input type="text" class="form-control form-control-solid" placeholder="Form Name" data-name="judul"/>
                 </div>
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">Customer</span>
                     </label>
-                    <select name="customer_id" data-name="customer_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
+                    <select name="customer_id[]" data-name="customer_id[]" data-control="select2" multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
                         <option value="">Select a Customer...</option>
                         @foreach ($customer as $key => $val)
                             <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
@@ -180,7 +192,7 @@
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">Entity</span>
                     </label>
-                    <select name="entity_id" data-name="entity_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Entity..." class="form-select form-select-solid">
+                    <select name="entity_id[]" data-name="entity_id[]" data-control="select2" multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a Entity..." class="form-select form-select-solid">
                         <option value="">Select a Entity...</option>
                         @foreach ($entity as $key => $val)
                             <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
@@ -192,14 +204,14 @@
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">DATE START ACTIVE</span>
                     </label>
-                    <input type="text" class="form-control form-control-solid datepicker" placeholder="Date Start Active" data-name="date_start_active"/>
+                    <input type="text" class="form-control form-control-solid datepicker" placeholder="Date Start Active" data-name="active_date"/>
                 </div>
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">USER CONTENT</span>
                     </label>
-                    <select name="user_id[]" data-name="user_id[]" data-control="select2"multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a User Content..." class="form-select form-select-solid">
+                    <select name="user_id[]" data-name="user_id[]" data-control="select2" multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a User Content..." class="form-select form-select-solid">
                         <option value="">Select a User Content...</option>
                         @foreach ($user as $key => $val)
                             <option value="{{$val->id}}">{{strtoupper($val->alias)}}</option>
@@ -211,7 +223,7 @@
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">ROLE APPROVAL</span>
                     </label>
-                    <select name="role_id[]" data-name="role_id[]" data-control="select2"multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a Role Approval..." class="form-select form-select-solid">
+                    <select name="role_id[]" data-name="role_id[]" data-control="select2" multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a Role Approval..." class="form-select form-select-solid">
                         <option value="">Select a Role Approval...</option>
                         @foreach ($role as $key => $val)
                             <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
@@ -236,28 +248,28 @@
 <script>
     $(document).on("click", "[data-name='add_data']", function (e) {
         $('[data-name="judul"]').val('');
-        $('[data-name="project_id"]').val('').trigger("change");
         $('[data-name="user_id"]').val('').trigger("change");
         $('[data-name="role_id"]').val('').trigger("change");
-        $('[data-name="date_start_active"]').val('');
-        $('[data-name="date_end_active"]').val('');
+        $('[data-name="entity_id"]').val('').trigger("change");
+        $('[data-name="customer_id"]').val('').trigger("change");
+        $('[data-name="active_date"]').val('');
         $('#add_data').modal('show');
     });
 
     $(document).on("click", "[data-name='save_data']", function (e) {
 
         $('.preloader').show();
-        var judul      = $('[data-name="judul"]').val();
-        var project_id = $('[data-name="project_id"]').val();
-        var date_start_active = $('[data-name="date_start_active"]').val();
-        var date_end_active = $('[data-name="date_end_active"]').val();
-        var user_id = $('[data-name="user_id[]"]').val();
-        var role_id = $('[data-name="role_id[]"]').val();
+        var judul           = $('[data-name="judul"]').val();
+        var user_id         = $('[data-name="user_id[]"]').val();
+        var role_id         = $('[data-name="role_id[]"]').val();
+        var entity_id       = $('[data-name="entity_id[]"]').val();
+        var customer_id     = $('[data-name="customer_id[]"]').val();
+        var active_date     = $('[data-name="active_date"]').val();
 
         $.ajax({
             type: "POST",
             url: "{{ route('formuliradd') }}",
-            data: {judul:judul,project_id:project_id,date_start_active:date_start_active,date_end_active:date_end_active,user_id:user_id,role_id:role_id},
+            data: {judul:judul,user_id:user_id,role_id:role_id,entity_id:entity_id,customer_id:customer_id,active_date:active_date},
             cache: false,
             success: function(data) {
                 console.log(data);
@@ -269,7 +281,8 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then((data) => {
-                    location.reload();
+                    // location.reload();
+                    location.href = "{{'eform'}}";
                 })
             },            
             error: function (data) {

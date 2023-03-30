@@ -86,6 +86,7 @@
                             <th>ROLE</th>
                             <th>EMAIL</th>
                             <th>NO TLP/ HP</th>
+                            <th>SERVICE BASE</th>
                             <th>STATUS</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -107,6 +108,7 @@
                                 <td>{{$val->role_name}}</td>
                                 <td>{{$val->email}}</td>
                                 <td>{{$val->tlp}}</td>
+                                <td>{{strtoupper($val->city.'-'.$val->region)}}</td>
                                 <td>
                                     @if ($val->is_active == 1)
                                         <div class="badge badge-light-success">Active</div>
@@ -157,61 +159,79 @@
                 </div>
             </div>
             <div class="modal-body py-10 px-lg-17">
-                
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">NAMA LENGKAP</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="NAMA LENGKAP" data-name="name"/>
+
+                <div class="row mb-5">
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">NAMA LENGKAP</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="NAMA LENGKAP" data-name="name"/>
+                    </div>
+
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">ALIAS</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="ALIAS" data-name="alias"/>
+                    </div>
                 </div>
 
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">ALIAS</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="ALIAS" data-name="alias"/>
+                <div class="row mb-5">
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">EMAIL</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="EMAIL" data-name="email"/>
+                    </div>
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">NO TLP/ HP</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="NO TLP/ HP" data-name="tlp"/>
+                    </div>
                 </div>
 
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">EMAIL</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="EMAIL" data-name="email"/>
+                <div class="row mb-5">
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">USERNMAE</span>
+                        </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="USERNMAE" data-name="username"/>
+                    </div>
+
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">PASSWORD</span>
+                        </label>
+                        <input type="password" class="form-control form-control-solid" placeholder="PASSWORD" data-name="password"/>
+                    </div>
                 </div>
 
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">NO TLP/ HP</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="NO TLP/ HP" data-name="tlp"/>
-                </div>
+                <div class="row mb-5">
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">ROLE</span>
+                        </label>
+                        <select name="role_id" data-name="role_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Role..." class="form-select form-select-solid">
+                            <option value="">Select a Role...</option>
+                            @foreach ($role as $key => $val)
+                                <option value="{{$val->id}}">{{$val->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">USERNMAE</span>
-                    </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="USERNMAE" data-name="username"/>
+                    <div class="col-md-6 fv-row fv-plugins-icon-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">Service Base</span>
+                        </label>
+                        <select name="role_id" data-name="role_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Role..." class="form-select form-select-solid">
+                            <option value="">Select a Role...</option>
+                            @foreach ($role as $key => $val)
+                                <option value="{{$val->id}}">{{$val->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">PASSWORD</span>
-                    </label>
-                    <input type="password" class="form-control form-control-solid" placeholder="PASSWORD" data-name="password"/>
-                </div>
-
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">ROLE</span>
-                    </label>
-                    <select name="role_id" data-name="role_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Role..." class="form-select form-select-solid">
-                        <option value="">Select a Role...</option>
-                        @foreach ($role as $key => $val)
-                            <option value="{{$val->id}}">{{$val->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
 
             </div>
             <div class="modal-footer flex-center">

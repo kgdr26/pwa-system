@@ -195,12 +195,11 @@
 
 <script>
     $(document).on("click", "[data-name='add_data']", function (e) {
-        var name            = $('[data-name="name"]').val('');
-        var alias           = $('[data-name="alias"]').val('');
-        var customer_type   = $('[data-name="customer_type"]').val('');
-        var email           = $('[data-name="email"]').val('');
-        var tlp             = $('[data-name="tlp"]').val('');
-        var entity_id       = $('[data-name="entity_id"]').val('');
+        $('[data-name="name"]').val('');
+        $('[data-name="alias"]').val('');
+        $('[data-name="customer_type"]').val('');
+        $('[data-name="email"]').val('');
+        $('[data-name="tlp"]').val('');
         $('#add_data').modal('show');
     });
 
@@ -217,7 +216,7 @@
         $.ajax({
             type: "POST",
             url: "{{ route('addcustomer') }}",
-            data: {name:name,alias:alias,customer_type:customer_type,email:email,tlp:tlp,entity_id:entity_id},
+            data: {name:name,alias:alias,customer_type:customer_type,email:email,tlp:tlp},
             cache: false,
             success: function(data) {
                 // console.log(data);

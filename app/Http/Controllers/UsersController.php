@@ -22,10 +22,12 @@ class UsersController extends Controller
     {
         $arr    = listusers();
         $role   = listrole();
+        $servicebase   = listservicebase();
         $data = array(
             'title' => 'Users',
             'arr'   => $arr,
-            'role'  => $role
+            'role'  => $role,
+            'servicebase'   => $servicebase
         );
 
         return view('Users.list')->with($data);
@@ -42,7 +44,7 @@ class UsersController extends Controller
         $password  = Hash::make($pass);
         $role_id   = $request['role_id'];
         $is_active  = 1;
-        $update_by  = 1;
+        $update_by  = auth::user()->id;
 
         $countrows  = listusers();
         $cn         = sprintf("%04d",(count($countrows)+1));
@@ -76,7 +78,7 @@ class UsersController extends Controller
         $code       = $request['code'];
         $name       = $request['name'];
         $is_active  = 1;
-        $update_by  = 1;
+        $update_by  = auth::user()->id;
 
         DB::insert("INSERT INTO mst_role (code,name,is_active,update_by) values (?,?,?,?)", [$code,$name,$is_active,$update_by]);
 
