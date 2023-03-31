@@ -227,7 +227,7 @@
                         <select name="id_service_base" data-name="id_service_base" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Service Base..." class="form-select form-select-solid">
                             <option value="">Select a Role...</option>
                             @foreach ($servicebase as $key => $val)
-                                <option value="{{$val->id}}">{{$val->name}}</option>
+                                <option value="{{$val->id}}">{{strtoupper($val->city)}} - {{strtoupper($val->region)}}</option>
                             @endforeach
                         </select>
                     </div>
