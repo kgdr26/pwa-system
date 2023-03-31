@@ -43,6 +43,7 @@ class UsersController extends Controller
         $pass      = $request['password'];
         $password  = Hash::make($pass);
         $role_id   = $request['role_id'];
+        $id_service_base   = $request['id_service_base'];
         $is_active  = 1;
         $update_by  = auth::user()->id;
 
@@ -57,7 +58,7 @@ class UsersController extends Controller
         $cd         = $rolecode['row']->code;
         $code       = $cd.'-'.$cn;
 
-        DB::insert("INSERT INTO users (code,username,pass,password,name,alias,role_id,email,tlp,is_active,update_by) values (?,?,?,?,?,?,?,?,?,?,?)", [$code,$username,$pass,$password,$name,$alias,$role_id,$email,$tlp,$is_active,$update_by]);
+        DB::insert("INSERT INTO users (code,username,pass,password,name,alias,role_id,email,tlp,id_service_base,is_active,update_by) values (?,?,?,?,?,?,?,?,?,?,?,?)", [$code,$username,$pass,$password,$name,$alias,$role_id,$email,$tlp,$id_service_base,$is_active,$update_by]);
 
         return response('success');
     }

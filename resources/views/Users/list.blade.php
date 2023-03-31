@@ -224,9 +224,9 @@
                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                             <span class="required">Service Base</span>
                         </label>
-                        <select name="role_id" data-name="role_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Role..." class="form-select form-select-solid">
+                        <select name="id_service_base" data-name="id_service_base" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Service Base..." class="form-select form-select-solid">
                             <option value="">Select a Role...</option>
-                            @foreach ($role as $key => $val)
+                            @foreach ($servicebase as $key => $val)
                                 <option value="{{$val->id}}">{{$val->name}}</option>
                             @endforeach
                         </select>
@@ -254,7 +254,8 @@
         $('[data-name="tlp"]').val('');
         $('[data-name="username"]').val('');
         $('[data-name="password"]').val('');
-        $('[data-name="role_id"]').val('');
+        $('[data-name="role_id"]').val('').trigger("change");
+        $('[data-name="id_service_base"]').val('').trigger("change");
         $('#add_data').modal('show');
     });
 
@@ -268,11 +269,12 @@
         var username    = $('[data-name="username"]').val();
         var password    = $('[data-name="password"]').val();
         var role_id     = $('[data-name="role_id"]').val();
+        var id_service_base = $('[data-name="id_service_base"]').val();
 
         $.ajax({
             type: "POST",
             url: "{{ route('adduser') }}",
-            data: {name:name,alias:alias,email:email,tlp:tlp,username:username,password:password,role_id:role_id},
+            data: {name:name,alias:alias,email:email,tlp:tlp,username:username,password:password,role_id:role_id,id_service_base:id_service_base},
             cache: false,
             success: function(data) {
                 // console.log(data);

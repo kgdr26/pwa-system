@@ -10,7 +10,7 @@
     border-radius: 0.5rem;
 }
 
-@media screen and (width: 300px) {
+@media screen and (max-width: 1007px) {
     .card-login{
         width: 85%;
     }
