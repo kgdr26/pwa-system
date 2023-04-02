@@ -112,7 +112,7 @@ function listservicebase(){
 }
 // End Action service base
 
-
+// Action Auto singkat
 function autosingkat($nm){
     $arr    = '';
     foreach($nm as $key => $val){
@@ -121,3 +121,106 @@ function autosingkat($nm){
 
     return $arr;
 }
+// End Action Auto singkat
+
+//Get data eform
+function getdataeform($id){
+    $id     = $id;
+
+    $arr    = collect(\DB::select("SELECT * FROM trx_formulir WHERE id='$id'"))->first();
+
+    $cus    = json_decode($arr->customer_id);
+    $cus_alias  = '';
+    foreach ($cus as $k => $value) {
+        $arr_cus_alias      = collect(\DB::select("SELECT alias FROM mst_customer WHERE id = '$value'"))->first();
+        $arr_cus_alias      = strtoupper($arr_cus_alias->alias);
+        $cus_alias         .= $arr_cus_alias.', ';
+    }
+
+    $ent    = json_decode($arr->entity_id);
+    $ent_alias  = '';
+    foreach ($ent as $k => $value) {
+        $arr_ent_alias      = collect(\DB::select("SELECT alias FROM mst_entity WHERE id = '$value'"))->first();
+        $arr_ent_alias      = strtoupper($arr_ent_alias->alias);
+        $ent_alias         .= $arr_ent_alias.', ';
+    }
+
+    $usr    = json_decode($arr->user_id);
+    $usr_alias  = '';
+    foreach ($usr as $k => $value) {
+        $arr_usr_alias      = collect(\DB::select("SELECT alias FROM users WHERE id = '$value'"))->first();
+        $arr_usr_alias      = strtoupper($arr_usr_alias->alias);
+        $usr_alias         .= $arr_usr_alias.', ';
+    }
+
+    $rol    = json_decode($arr->role_id);
+    $rol_alias  = '';
+    foreach ($rol as $k => $value) {
+        $arr_rol_alias      = collect(\DB::select("SELECT name FROM mst_role WHERE id = '$value'"))->first();
+        $arr_rol_alias      = strtoupper($arr_rol_alias->name);
+        $rol_alias         .= $arr_rol_alias.', ';
+    }
+
+    $form   = json_decode($arr->form);
+    $listform   = '';
+    $no     = 1;
+    $count_form = count($form);
+    foreach($form as $key => $val){
+        $no_form    = $no++;
+        $listform .= '<div class="card mb-3" id=""><div class="card-header"><div class="card-title m-0">';
+        $listform .= '<h3 class="fw-bold m-0">'.$no_form.'. '.$val->QUESTION.'</h3>';
+        $listform .= '</div></div>';
+        $listform .= '<div class="card-body">';
+        
+        if($val->TYPE == 'CHOICE'){
+            $CHOICE_CONTENT = '';
+            foreach($val->CHOICE as $k => $v){
+                $CHOICE_CONTENT .= '<label class="form-check form-check-custom form-check-solid me-10 cursor-pointer">';
+                $CHOICE_CONTENT .= '<input class="form-check-input h-20px w-20px" type="checkbox" name="CHOICE_CONTENT[]" value="'.$v->CHOICE_CONTENT.'">';
+                $CHOICE_CONTENT .= '<span class="form-check-label fw-bold" style="color : #000000">'.strtoupper($v->CHOICE_CONTENT).'</span></label>';
+            }
+
+            $listform .= '<h4 class="fw-bold m-0 d-flex align-items-center w-100">ANSWER : &nbsp;&nbsp;&nbsp;'.$CHOICE_CONTENT.'</h4>';
+        }else{
+            $listform .= '<h4 class="fw-bold m-0">ANSWER :</h4>';
+        }
+
+        $listform .= '</div>';
+        $listform .= '<div class="card-footer d-flex justify-content-end">';
+        $listform .= '<a href="#" class="btn btn-secondary me-3">Edit Form List</a>';
+        if($no_form == $count_form){
+            $listform .= '<a href="#" class="btn btn-primary" data-name="add_data">Add Form List</a>';
+        }
+        $listform .= '</div></div>';
+    }
+
+
+    $data['code']       = $arr->code;
+    $data['form_name']  = $arr->judul;
+    $data['user_content']   = substr($usr_alias, 0, -2);
+    $data['role_approval']  = substr($rol_alias, 0, -2);
+    $data['customer']   = substr($cus_alias, 0, -2);
+    $data['entity']     = substr($ent_alias, 0, -2);
+    $data['form']       = $listform;
+
+    return $data;
+}
+//End Get data eform
+
+//Action Add list form
+function adddataeform($data){
+
+    $id     = $data['id'];
+
+    $arr    = collect(\DB::select("SELECT * FROM trx_formulir WHERE id='$id'"))->first();
+
+    $form       = json_decode($arr->form);
+    $count_form = count($form);
+    
+
+    $dat['show']    = json_decode($arr->form);
+
+    return $dat;
+    // return 'success';
+}
+//End Add list form

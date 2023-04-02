@@ -281,8 +281,8 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then((data) => {
-                    // location.reload();
-                    location.href = "{{'eform'}}";
+                    location.reload();
+                    // location.href = "{{'eform'}}";
                 })
             },            
             error: function (data) {

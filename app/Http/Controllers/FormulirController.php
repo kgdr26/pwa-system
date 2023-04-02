@@ -82,21 +82,47 @@ class FormulirController extends Controller
         $cn             = sprintf("%04d",(count($countrows)+1));
 
         $code           = 'frm.'.date('ymd').'.'.$cn;
+        $form           = '[]';
 
-        DB::insert("INSERT INTO trx_formulir (code,judul,active_date,user_id,role_id,entity_id,customer_id,is_active,update_by) values (?,?,?,?,?,?,?,?,?)", [$code,$judul,$active_date,$user_id,$role_id,$entity_id,$customer_id,$is_active,$update_by]);
+        DB::insert("INSERT INTO trx_formulir (code,form,judul,active_date,user_id,role_id,entity_id,customer_id,is_active,update_by) values (?,?,?,?,?,?,?,?,?,?)", [$code,$form,$judul,$active_date,$user_id,$role_id,$entity_id,$customer_id,$is_active,$update_by]);
 
         return response('success');
     }
 
-    function eform()
+    function eform(Request $request)
     {
-        $arr        = listformulir();
+        $id         = $request['id'];
         $data = array(
             'title'     => 'Forms',
+            'id'        => $id
         );
 
         return view('Formulir.eform')->with($data);
     }
 
+    function getdataeform(Request $request)
+    {
+        $id         = $request['id'];
+        $arr        = getdataeform($id);
+
+        return response($arr);
+    }
+
+    function adddataeform(Request $request)
+    {
+        $id         = $request['id'];
+        $QUESTION   = $request['QUESTION'];
+        $TYPE       = $request['TYPE'];
+
+        $data       = array(
+            'id'        => $id,
+            'QUESTION'  => $QUESTION,
+            'TYPE'      => $TYPE,
+        );
+
+        $arr        = adddataeform($data);
+
+        return response($arr);
+    }
 
 }

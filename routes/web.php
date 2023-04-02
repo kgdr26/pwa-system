@@ -31,6 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('formulir',['as'=> 'formulir','uses'=>'FormulirController@Formulir']);
     Route::post('formuliradd',['as'=> 'formuliradd','uses'=>'FormulirController@formuliradd']);
     Route::get('eform',['as'=> 'eform','uses'=>'FormulirController@eform']);
+    Route::post('getdataeform',['as'=> 'getdataeform','uses'=>'FormulirController@getdataeform']);
+    Route::post('adddataeform',['as'=> 'adddataeform','uses'=>'FormulirController@adddataeform']);
 
     // Project
     Route::get('project',['as'=> 'project','uses'=>'ProjectController@Project']);
