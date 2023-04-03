@@ -113,11 +113,13 @@ class FormulirController extends Controller
         $id         = $request['id'];
         $QUESTION   = $request['QUESTION'];
         $TYPE       = $request['TYPE'];
+        $CHOICE     = $request['CHOICE'];
 
         $data       = array(
             'id'        => $id,
             'QUESTION'  => $QUESTION,
             'TYPE'      => $TYPE,
+            'CHOICE'    => $CHOICE,
         );
 
         $arr        = adddataeform($data);

@@ -210,17 +210,77 @@ function getdataeform($id){
 //Action Add list form
 function adddataeform($data){
 
-    $id     = $data['id'];
+    $id         = $data['id'];
+    $QUESTION   = $data['QUESTION'];
+    $TYPE       = $data['TYPE'];
+    $CHOICE     = json_encode($data['CHOICE']);
 
     $arr    = collect(\DB::select("SELECT * FROM trx_formulir WHERE id='$id'"))->first();
 
     $form       = json_decode($arr->form);
     $count_form = count($form);
+    $id_form    = $count_form+1;
+    $frm        = '';
+    if($count_form == 0){
+        if($TYPE == "CHOICE"){
+            $id_val_chc = 1;
+            $loop_chc   = json_decode($CHOICE);
+            $frm        .= '[{"ID": '.$id_form.',"TYPE": "'.$TYPE.'","QUESTION": "'.$QUESTION.'","ANSWER": "","CHOICE": [';
+            $val_chc    = '';
+            foreach($loop_chc as $key => $val){
+                $val_chc    .= '{"ID_CHOICE": '.$id_val_chc++.',"CHOICE_CONTENT": "'.$val.'"},';
+            }
+            $frm    .= substr($val_chc, 0, -1).']}]';
+        }else{
+            $frm    .= '[{"ID": '.$id_form.',"TYPE": "'.$TYPE.'","QUESTION": "'.$QUESTION.'","ANSWER": "","CHOICE": []}]';
+        }
+    }else{
+        if($TYPE == "CHOICE"){
+            $frm    .= '[';
+            foreach($form as $key => $val){
+                if($val->TYPE == 'CHOICE'){
+                    $frm        .= '{"ID": '.$val->ID.',"TYPE": "'.$val->TYPE.'","QUESTION": "'.$val->QUESTION.'","ANSWER": "'.$val->ANSWER.'","CHOICE": [';
+                    $val_chc    = '';
+                    foreach($val->CHOICE as $k => $v){
+                        $val_chc    .= '{"ID_CHOICE": '.$v->ID_CHOICE.',"CHOICE_CONTENT": "'.$v->CHOICE_CONTENT.'"},';
+                    }
+                    $frm    .= substr($val_chc, 0, -1).']},';
+                }else{
+                    $frm    .= '{"ID":'.$val->ID.',"TYPE":"'.$val->TYPE.'","QUESTION":"'.$val->QUESTION.'","ANSWER":"'.$val->ANSWER.'","CHOICE": []},';
+                }
+            }
+            $id_val_chc = 1;
+            $loop_chc   = json_decode($CHOICE);
+            $frm        .= '{"ID": '.$id_form.',"TYPE": "'.$TYPE.'","QUESTION": "'.$QUESTION.'","ANSWER": "","CHOICE": [';
+            $val_chc    = '';
+            foreach($loop_chc as $s => $t){
+                $val_chc    .= '{"ID_CHOICE": '.$id_val_chc++.',"CHOICE_CONTENT": "'.$t.'"},';
+            }
+            $frm    .= substr($val_chc, 0, -1).']}]';
+        }else{
+            $frm    .= '[';
+            foreach($form as $key => $val){
+                if($val->TYPE == 'CHOICE'){
+                    $frm        .= '{"ID": '.$val->ID.',"TYPE": "'.$val->TYPE.'","QUESTION": "'.$val->QUESTION.'","ANSWER": "'.$val->ANSWER.'","CHOICE": [';
+                    $val_chc    = '';
+                    foreach($val->CHOICE as $k => $v){
+                        $val_chc    .= '{"ID_CHOICE": '.$v->ID_CHOICE.',"CHOICE_CONTENT": "'.$v->CHOICE_CONTENT.'"},';
+                    }
+                    $frm    .= substr($val_chc, 0, -1).']},';
+                }else{
+                    $frm    .= '{"ID":'.$val->ID.',"TYPE":"'.$val->TYPE.'","QUESTION":"'.$val->QUESTION.'","ANSWER":"'.$val->ANSWER.'","CHOICE": []},';
+                }
+            }
+            $frm    .= '{"ID": '.$id_form.',"TYPE": "'.$TYPE.'","QUESTION": "'.$QUESTION.'","ANSWER": "","CHOICE": []}]';
+        }
+    }
     
+    DB::table('trx_formulir')->where('id', $id)->update(['form' => $frm]);
 
-    $dat['show']    = json_decode($arr->form);
+    // $dat['show']    = $frm;
 
-    return $dat;
-    // return 'success';
+    // return $frm;
+
+    return 'success';
 }
 //End Add list form

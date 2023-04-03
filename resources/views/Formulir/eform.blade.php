@@ -149,13 +149,32 @@
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">Type</span>
                     </label>
-                    <select name="TYPE" data-name="TYPE" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Type..." class="form-select form-select-solid">
+                    <select name="TYPE" data-name="TYPE" id="TYPE_FORM" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Type..." class="form-select form-select-solid">
                         <option value="">Select a Type...</option>
                         <option value="ANSWER">ANSWER</option>
                         <option value="CHOICE">CHOICE</option>
                     </select>
                 </div>
 
+                <div id="show_choice" style="display: none;">
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">CHOICE</span>
+                        </label>
+                        <div class="field_wrapper">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" aria-describedby="button-addon2" data-name="CHOICE[]" name="CHOICE[]">
+                                <button class="btn btn-primary add_button" type="button" id="button-addon2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                                    </svg>
+                                </button>
+                            </div>
+    
+                        </div>
+                        
+                    </div>
+                </div>
 
             </div>
             <div class="modal-footer flex-center">
@@ -180,6 +199,7 @@
     $(document).on("click", "[data-name='add_data']", function (e) {
         $('[data-name="QUESTION"]').val('');
         $('[data-name="TYPE"]').val('').trigger("change");
+        $('[data-name="CHOICE"]').val('');
         $('#add_data').modal('show');
     });
 
@@ -187,11 +207,22 @@
         var id          = '{{$id}}';
         var QUESTION    = $('[data-name="QUESTION"]').val();
         var TYPE        = $('[data-name="TYPE"]').val();
+        var chc         = $('[data-name="CHOICE[]"]');
+
+        // console.log(chc.length);
+
+        if(TYPE == "CHOICE"){
+            var CHOICE = [];
+            $('[data-name="CHOICE[]"]').each(function() {
+                CHOICE.push($(this).val());
+            });
+            // console.log(CHOICE);
+        }
 
         $.ajax({
             type: "POST",
             url: "{{ route('adddataeform') }}",
-            data: {id:id,QUESTION:QUESTION,TYPE:TYPE},
+            data: {id:id,QUESTION:QUESTION,TYPE:TYPE,CHOICE:CHOICE},
             cache: false,
             success: function(data) {
                 console.log(data);
@@ -203,7 +234,8 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then((data) => {
-                    // location.reload();
+                    location.reload();
+                    $('#add_data').modal('hide');
                 })
             },            
             error: function (data) {
@@ -216,10 +248,44 @@
                     // timer: 1500
                 }).then((data) => {
                     // location.reload();
+                    $('#add_data').modal('hide');
                 })
             }
         });
 
+    });
+</script>
+
+<script>
+    $('#TYPE_FORM').on('change', function() {
+        // alert( this.value );
+        var TYPE_FORM = this.value;
+        if(TYPE_FORM == "CHOICE"){
+            $('#show_choice').show();
+        }else{
+            $('#show_choice').hide();
+        }
+
+    });
+    $(document).ready(function(){
+        var maxField = 10;
+        var addButton = $('.add_button');
+        var wrapper = $('.field_wrapper');
+        var fieldHTML = '<div class="input-group mb-3"><input type="text" class="form-control" aria-describedby="button-addon2" data-name="CHOICE[]" name="CHOICE[]"><button class="btn btn-danger remove_button" type="button" id="button-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/></svg></button></div>';
+        var x = 1;
+        
+        $(addButton).click(function(){
+            if(x < maxField){ 
+                x++;
+                $(wrapper).append(fieldHTML);
+            }
+        });
+        
+        $(wrapper).on('click', '.remove_button', function(e){
+            e.preventDefault();
+            $(this).parent('div').remove();
+            x--;
+        });
     });
 </script>
 
