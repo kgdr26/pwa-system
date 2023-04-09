@@ -20,9 +20,11 @@ class ProjectController extends Controller
 {
     function Project()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr        = listproject();
         $customer   = listcustomer();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Project',
             'arr'   => $arr,
             'customer'=> $customer

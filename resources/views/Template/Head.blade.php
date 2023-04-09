@@ -58,3 +58,9 @@
     <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
     <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
 @endif
+
+@if (Route::currentRouteName()=='contenteform')
+    <link href="{{asset('assets/plugin_tenp/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/plugin_tenp/datatables.bundle.js')}}"></script>
+    <script src="{{asset('assets/bootstrap/bootstrap-datepicker.min.js')}}"></script>
+@endif

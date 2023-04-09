@@ -20,7 +20,9 @@ class DashboardController extends Controller
 {
     function Dashboard()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Dashboard'
         );
 

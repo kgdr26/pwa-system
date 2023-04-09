@@ -20,8 +20,10 @@ class EntityController extends Controller
 {
     function Entity()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listentity();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Entity',
             'arr'   => $arr
         );

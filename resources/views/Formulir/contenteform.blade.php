@@ -7,16 +7,16 @@
         <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
             <!--begin::Title-->
             <h1 class="text-dark fw-bold my-1 fs-2">
-                Project <small class="text-muted fs-6 fw-normal ms-1"></small>
+                Formulir <small class="text-muted fs-6 fw-normal ms-1"></small>
             </h1>
             <!--end::Title-->
 
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb fw-semibold fs-base my-1">
                 <li class="breadcrumb-item text-muted">
-                    <a href="" class="text-muted text-hover-primary">Project</a>
+                    <a href="" class="text-muted text-hover-primary">Formulir</a>
                 </li>
-                <li class="breadcrumb-item text-muted">List Project </li>
+                <li class="breadcrumb-item text-muted">List Formulir </li>
             </ul>
             <!--end::Breadcrumb-->
         </div>
@@ -57,14 +57,6 @@
 
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                    <!--begin::Add product-->
-                    <a href="#" class="btn btn-primary" data-name="add_data">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                        </svg>
-                        Add Project
-                    </a>
-                    <!--end::Add product-->
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -80,8 +72,10 @@
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th>NO</th>
                             <th>CODE</th>
-                            <th>PROJECT NAME</th>
+                            <th>JUDUL</th>
                             <th>CUSTOMER</th>
+                            <th>ENTITY</th>
+                            <th class="text-center">ACTIVE DATE</th>
                             <th>STATUS</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -97,8 +91,24 @@
                             <tr>
                                 <td>{{$no++}}</td>
                                 <td>{{strtoupper($val->code)}}</td>
-                                <td>{{strtoupper($val->name)}}</td>
-                                <td>{{strtoupper($val->customer_name)}}</td>
+                                <td>{{strtoupper($val->judul)}}</td>
+                                <td>
+                                    @if ($val->cus_alias != null)
+                                        @foreach ($val->cus_alias as $row)
+                                            {{$row}}
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($val->ent_alias != null)
+                                        @foreach ($val->ent_alias as $row)
+                                            {{$row}}
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    {{$val->active_date}}
+                                </td>
                                 <td>
                                     @if ($val->is_active == 1)
                                         <div class="badge badge-light-success">Active</div>
@@ -108,13 +118,9 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-info me-3" data-name="edit_data" data-item="{{$val->id}},{{$val->name}}">
-                                            Edit
-                                        </button>
-                                        <button type="button" data-name="save_data" class="btn btn-danger">
-                                            Delete
-                                        </button>
-                                    </div>
+                                        <a href="{{route('eform', ['id'=>$val->id])}}" class="btn btn-info me-3">
+                                            Show Form
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -136,7 +142,7 @@
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <div class="modal-content">
             <div class="modal-header" id="">
-                <h2>Add New Project</h2>
+                <h2>Add New Form</h2>
                 <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                     <span class="svg-icon svg-icon-1">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -153,22 +159,66 @@
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">NAME</span>
+                        <span class="required">Form Name</span>
                     </label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Name" data-name="name"/>
+                    <input type="text" class="form-control form-control-solid" placeholder="Form Name" data-name="judul"/>
                 </div>
 
                 <div class="d-flex flex-column mb-8 fv-row">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                        <span class="required">CUSTOMER</span>
+                        <span class="required">Customer</span>
                     </label>
-                    <select name="customer_id" data-name="customer_id" data-control="select2" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
+                    <select name="customer_id[]" data-name="customer_id[]" data-control="select2" multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a Customer..." class="form-select form-select-solid">
                         <option value="">Select a Customer...</option>
                         @foreach ($customer as $key => $val)
                             <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
                         @endforeach
                     </select>
                 </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">Entity</span>
+                    </label>
+                    <select name="entity_id[]" data-name="entity_id[]" data-control="select2" multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a Entity..." class="form-select form-select-solid">
+                        <option value="">Select a Entity...</option>
+                        @foreach ($entity as $key => $val)
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">DATE START ACTIVE</span>
+                    </label>
+                    <input type="text" class="form-control form-control-solid datepicker" placeholder="Date Start Active" data-name="active_date"/>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">USER CONTENT</span>
+                    </label>
+                    <select name="user_id[]" data-name="user_id[]" data-control="select2" multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a User Content..." class="form-select form-select-solid">
+                        <option value="">Select a User Content...</option>
+                        @foreach ($user as $key => $val)
+                            <option value="{{$val->id}}">{{strtoupper($val->alias)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column mb-8 fv-row">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">ROLE APPROVAL</span>
+                    </label>
+                    <select name="role_id[]" data-name="role_id[]" data-control="select2" multiple="multiple" data-dropdown-parent="#add_data" data-placeholder="Select a Role Approval..." class="form-select form-select-solid">
+                        <option value="">Select a Role Approval...</option>
+                        @foreach ($role as $key => $val)
+                            <option value="{{$val->id}}">{{strtoupper($val->name)}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
 
             </div>
             <div class="modal-footer flex-center">
@@ -183,24 +233,31 @@
     </div>
 </div>
 
-{{-- Action Add --}}
 <script>
     $(document).on("click", "[data-name='add_data']", function (e) {
-        $('[data-name="name"]').val('');
-        $('[data-name="customer_id"]').val('');
+        $('[data-name="judul"]').val('');
+        $('[data-name="user_id"]').val('').trigger("change");
+        $('[data-name="role_id"]').val('').trigger("change");
+        $('[data-name="entity_id"]').val('').trigger("change");
+        $('[data-name="customer_id"]').val('').trigger("change");
+        $('[data-name="active_date"]').val('');
         $('#add_data').modal('show');
     });
 
     $(document).on("click", "[data-name='save_data']", function (e) {
 
         $('.preloader').show();
-        var name        = $('[data-name="name"]').val();
-        var customer_id = $('[data-name="customer_id"]').val();
+        var judul           = $('[data-name="judul"]').val();
+        var user_id         = $('[data-name="user_id[]"]').val();
+        var role_id         = $('[data-name="role_id[]"]').val();
+        var entity_id       = $('[data-name="entity_id[]"]').val();
+        var customer_id     = $('[data-name="customer_id[]"]').val();
+        var active_date     = $('[data-name="active_date"]').val();
 
         $.ajax({
             type: "POST",
-            url: "{{ route('projectadd') }}",
-            data: {name:name,customer_id:customer_id},
+            url: "{{ route('formuliradd') }}",
+            data: {judul:judul,user_id:user_id,role_id:role_id,entity_id:entity_id,customer_id:customer_id,active_date:active_date},
             cache: false,
             success: function(data) {
                 console.log(data);
@@ -213,6 +270,7 @@
                     timer: 1500
                 }).then((data) => {
                     location.reload();
+                    // location.href = "{{'eform'}}";
                 })
             },            
             error: function (data) {
@@ -232,37 +290,12 @@
     });
 </script>
 
-{{-- Action Edit --}}
 <script>
-    $(document).on("click", "[data-name='edit_data']", function (e) {
-        $('.preloader').show();
-        var id     = $(this).attr("data-item").split(",")[0];
-        var name   = $(this).attr("data-item").split(",")[1];
-
-        $.ajax({
-            type: "POST",
-            url: "{{ route('showdatatype') }}",
-            data: {id:id},
-            cache: false,
-            success: function(data) {
-                // console.log(data.data['name']);
-                $('[data-name="code_edit"]').val(data.row['code']);
-                $('[data-name="name_edit"]').val(data.row['name']);
-                $('#edit_data').modal('show');
-                $('.preloader').hide();
-            },            
-            error: function (data) {
-                $('.preloader').hide();
-                Swal.fire({
-                    position:'center',
-                    title: 'Action Not Valid!',
-                    icon: 'warning',
-                    showConfirmButton: true,
-                    // timer: 1500
-                }).then((data) => {
-                    // location.reload();
-                })
-            }
+    $(function () {
+        $(".datepicker").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: "yyyy-mm-dd",
         });
     });
 </script>

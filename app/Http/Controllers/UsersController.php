@@ -20,10 +20,12 @@ class UsersController extends Controller
 {
     function Users()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listusers();
         $role   = listrole();
         $servicebase   = listservicebase();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Users',
             'arr'   => $arr,
             'role'  => $role,
@@ -65,8 +67,10 @@ class UsersController extends Controller
 
     function Role()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listrole();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Manage Role',
             'arr'   => $arr
         );

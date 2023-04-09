@@ -1,5 +1,10 @@
 <?php
 
+function idn_user($id){
+    $arr    = collect(\DB::select("SELECT a.*, b.name AS name_role FROM users a LEFT JOIN  mst_role b ON a.role_id=b.id WHERE a.id='$id'"))->first();
+    return $arr;
+}
+
 //Action Cek Data
 function cekdata($data){
     $table      = $data['table'];
@@ -90,7 +95,7 @@ function listtypemachine(){
 
 // Action type Machine
 function listproject(){
-    $arr   = DB::select("SELECT a.*, b.name AS customer_name, c.name AS entity_name FROM mst_project a LEFT JOIN mst_customer b ON a.customer_id=b.id LEFT JOIN mst_entity c ON b.entity_id=c.id");
+    $arr   = DB::select("SELECT a.*, b.name AS customer_name FROM mst_project a LEFT JOIN mst_customer b ON a.customer_id=b.id");
 
     return $arr;
 }

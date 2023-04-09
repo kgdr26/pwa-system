@@ -20,9 +20,11 @@ class CustomerController extends Controller
 {
     function Customer()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listcustomer();
         $type   = listcustomertype();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Customer',
             'arr'   => $arr,
             'type'  => $type
@@ -53,8 +55,10 @@ class CustomerController extends Controller
 
     function CustomerType()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listcustomertype();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Customer Type',
             'arr'   => $arr
         );
@@ -80,10 +84,12 @@ class CustomerController extends Controller
 
     function showDataType(Request $request)
     {
+        $idn_user   = idn_user(auth::user()->id);
         $id         = $request['id'];
         $whr        = 'id';
         $table      = 'mst_customer_type';
         $data       = array(
+            'idn_user'  => $idn_user,
             'id'    => $id,
             'table' => $table,
             'whr'   => $whr

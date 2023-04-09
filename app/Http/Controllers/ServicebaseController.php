@@ -20,8 +20,10 @@ class ServicebaseController extends Controller
 {
     function Servicebase()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listservicebase();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Service Base',
             'arr'   => $arr,
         );

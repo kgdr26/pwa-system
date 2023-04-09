@@ -27,7 +27,7 @@
     <div class="container-xxl min-w-100">
         <div class="row g-xl-8">
 
-            <div class="col-xxl-4 gy-0 gy-xxl-8">
+            <div class="col-xxl-12 gy-0 gy-xxl-8">
                 <div class="card card-xxl-stretch mb-5 mb-xl-8">
                     <div class="card-body">
                         <div class="d-flex flex-column justify-content-between h-100">                   
@@ -50,9 +50,11 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom card-rounded-bottom max-h-175px min-h-175px">
+                            {{-- <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom card-rounded-bottom max-h-175px min-h-175px">
                                 <div id="map" style="width: 100%; height: 100%;"></div>
-                            </div>
+                            </div> --}}
+                            <div class="show_maps"></div>
+                            {{-- <iframe width="100%" height="500" src="https://maps.google.com/maps?q=-6.298287,107.01717&output=embed"></iframe> --}}
                         </div>
                     </div>
                 </div> 
@@ -76,6 +78,9 @@
 
         $('#lat').text(lat);
         $('#long').text(long);
+
+        var show_maps   = '<iframe width="100%" height="500" src="https://maps.google.com/maps?q='+lat+','+long+'&output=embed"></iframe>';
+        $('.show_maps').html(show_maps)
 
         // var latlng = new google.maps.LatLng(-6.298233,107.017143);
         var latlng = new google.maps.LatLng(lat,long);

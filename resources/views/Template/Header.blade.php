@@ -1351,9 +1351,9 @@
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
                                     <div class="fw-bold d-flex align-items-center fs-5">
-                                        Superadmin
+                                        {{strtoupper($idn_user->name_role)}}
                                     </div>
-                                    <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">Kang Dru</a>
+                                    <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{strtoupper($idn_user->name)}}</a>
                                 </div>
                                 <!--end::Username-->
                             </div>

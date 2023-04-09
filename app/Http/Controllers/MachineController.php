@@ -20,6 +20,7 @@ class MachineController extends Controller
 {
     function Machine()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listmachine();
         $type   = listtypemachine();
         $model  = listmodelmachine();
@@ -28,6 +29,7 @@ class MachineController extends Controller
         $entity = listentity();
 
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Machine',
             'arr'   => $arr,
             'type'  => $type,
@@ -68,8 +70,10 @@ class MachineController extends Controller
     
     function MachineType()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listtypemachine();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Machine Type',
             'arr'   => $arr
         );
@@ -95,8 +99,10 @@ class MachineController extends Controller
 
     function MachineVendor()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listvendormachine();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Machine Vendor',
             'arr'   => $arr
         );
@@ -122,8 +128,10 @@ class MachineController extends Controller
 
     function MachineModel()
     {
+        $idn_user   = idn_user(auth::user()->id);
         $arr    = listmodelmachine();
         $data = array(
+            'idn_user'  => $idn_user,
             'title' => 'Machine Model',
             'arr'   => $arr
         );

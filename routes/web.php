@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('eform',['as'=> 'eform','uses'=>'FormulirController@eform']);
     Route::post('getdataeform',['as'=> 'getdataeform','uses'=>'FormulirController@getdataeform']);
     Route::post('adddataeform',['as'=> 'adddataeform','uses'=>'FormulirController@adddataeform']);
+    Route::get('contenteform',['as'=> 'contenteform','uses'=>'FormulirController@contenteform']);
 
     // Project
     Route::get('project',['as'=> 'project','uses'=>'ProjectController@Project']);
