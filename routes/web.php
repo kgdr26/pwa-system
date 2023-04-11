@@ -71,6 +71,13 @@ Route::middleware(['auth'])->group(function () {
     //Service Base
     Route::get('servicebase',['as'=> 'servicebase','uses'=>'ServicebaseController@Servicebase']);
     Route::post('addservicebase',['as'=> 'addservicebase','uses'=>'ServicebaseController@addservicebase']);
+
+    //Record Latlong
+    Route::get('betweenlatlong',['as'=> 'betweenlatlong','uses'=>'RecordLatlongController@betweenlatlong']);
+    Route::post('setdistance',['as'=> 'setdistance','uses'=>'RecordLatlongController@setdistance']);
+    Route::post('addrecordlatlong',['as'=> 'addrecordlatlong','uses'=>'RecordLatlongController@addrecordlatlong']);
+    Route::get('historybetweenlatlong',['as'=> 'historybetweenlatlong','uses'=>'RecordLatlongController@historybetweenlatlong']);
+    
    
     Route::get('logout', ['as'=>'logout','uses'=>'AuthController@logout']);
 });

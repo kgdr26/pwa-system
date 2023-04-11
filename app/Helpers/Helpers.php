@@ -289,3 +289,65 @@ function adddataeform($data){
     return 'success';
 }
 //End Add list form
+
+
+// Action set ddistance location
+function listrecordlatlongnow($id_user){
+    $id_user    = $id_user;
+    $date_now   = date('y-m-d');
+
+    $arr   = DB::select("SELECT a.*, b.location_name AS mac_location_name FROM trx_record_latlong a LEFT JOIN mst_machine b ON a.id_machine=b.id WHERE a.id_user='$id_user' AND a.date_time_start LIKE '%$date_now%'");
+    return $arr;
+}
+
+function listrecordlatlong($id_user){
+    $id_user    = $id_user;
+    
+    $arr   = DB::select("SELECT a.*, b.location_name AS mac_location_name FROM trx_record_latlong a LEFT JOIN mst_machine b ON a.id_machine=b.id WHERE a.id_user='$id_user'");
+    return $arr;
+}
+
+function distance($lat1, $lon1, $lat2, $lon2) {
+    $theta = $lon1 - $lon2;
+    $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+    $dist = acos($dist);
+    $dist = rad2deg($dist);
+    $dist = $dist * 60 * 1.1515;
+    $dist = $dist * 1.609344 * 1000; // convert to meters
+    return $dist;
+}
+
+function travelTime($distance, $speed) {
+    $time = $distance / ($speed * 1000 / 3600);
+    return $time; // in seconds
+}
+
+
+function setdistance($data){
+    $lat        = $data['lat'];
+    $long       = $data['long'];
+    $machine    = $data['machine'];
+
+    $dt         = collect(\DB::select("SELECT a.*, b.name AS name_type, c.name AS name_model, d.name AS name_vendor, e.alias AS name_customer, f.alias AS name_entity FROM mst_machine a LEFT JOIN mst_machine_type b ON a.type_id=b.id LEFT JOIN mst_machine_model c ON a.model_id=c.id LEFT JOIN mst_machine_vendor d ON a.vendor_id=d.id LEFT JOIN mst_customer e ON a.customer_id=e.id LEFT JOIN mst_entity f ON a.customer_id=f.id WHERE a.id='$machine'"))->first();
+    
+    $latlong_mc = explode(",",$dt->lat_long);
+    
+    $locA_lat   = $lat;
+    $locA_lon   = $long;
+    $locB_lat   = $latlong_mc[0];
+    $locB_lon   = $latlong_mc[1];
+
+    $distance   = distance($locA_lat, $locA_lon, $locB_lat, $locB_lon);
+    $time       = travelTime($distance, 40);
+
+    $dats['show_wsid']          = $dt->wsid;
+    $dats['show_serial_no']     = $dt->serial_no;
+    $dats['show_location_name'] = $dt->location_name;
+    $dats['show_location_adr']  = $dt->location_adr;
+    $dats['show_customer_name'] = $dt->name_customer;
+    $dats['show_lat_long']      = $dt->lat_long;
+    $dats['show_id_mc']         = $dt->id;
+    $dats['show_distance']      = round($distance, 2);
+    $dats['show_travel_time']   = round($time/60, 2);
+    return $dats;
+}

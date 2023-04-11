@@ -143,3 +143,16 @@
     color: #ffffff;
     border-radius: 0.3rem;
 }
+
+.table.between{
+    width: 100%;
+}
+
+.table.between tr td:nth-child(1){
+    font-weight: bold;
+    white-space: nowrap !important;
+}
+
+.table.between tr td{
+    padding: 0.3rem !important;
+}
