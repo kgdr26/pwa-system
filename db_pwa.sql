@@ -110,12 +110,13 @@ CREATE TABLE `mst_machine` (
   `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `update_by` int(11) DEFAULT NULL,
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `mst_machine` */
 
 insert  into `mst_machine`(`id`,`wsid`,`serial_no`,`location_name`,`location_adr`,`customer_id`,`entity_id`,`lat_long`,`type_id`,`model_id`,`vendor_id`,`qr_code`,`is_active`,`last_update`,`update_by`) values 
-(1,'ws.230331.0001','76.45.33.467','alfamidi asem','P23C+GC5, Jl. Asem Jaya, RT.001/RW.006, Mustika Jaya, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17158',1,1,'-6.2962074420925, 107.02114667308534',1,1,1,'qr.230331.0001',1,'2023-03-31 05:52:20',1);
+(1,'ws.230331.0001','76.45.33.467','alfamidi asem','P23C+GC5, Jl. Asem Jaya, RT.001/RW.006, Mustika Jaya, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17158',1,1,'-6.2962074420925, 107.02114667308534',1,1,1,'qr.230331.0001',1,'2023-03-31 05:52:20',1),
+(2,'WS.208090','80.90.70.60','Indomaret Cipendawa','RT.008/RW.002, Bojong Menteng, Kec. Rawalumbu, Kota Bks, Jawa Barat 17117',1,1,'-6.296297451354148, 106.97915193060103',1,1,1,'qr.230411.0002',1,'2023-04-12 00:14:46',1);
 
 /*Table structure for table `mst_machine_model` */
 
@@ -271,6 +272,29 @@ insert  into `trx_formulir`(`id`,`code`,`judul`,`form`,`active_date`,`user_id`,`
 (2,'frm.230330.0002','change struk','[{\"ID\":1,\"TYPE\":\"ANSWER\",\"QUESTION\":\"Tesss pertanyaan 1\",\"ANSWER\":\"\",\"CHOICE\": []},{\"ID\": 2,\"TYPE\": \"\",\"QUESTION\": \"Tess pertanyaan 2\",\"ANSWER\": \"\",\"CHOICE\": []}]','2023-04-01','[\"2\",\"3\",\"5\"]','[\"4\",\"5\"]','[\"1\",\"2\"]','[\"3\",\"4\",\"5\"]',1,'2023-04-03 04:53:09',1),
 (3,'frm.230330.0003','change software','[{\"ID\":1,\"TYPE\":\"ANSWER\",\"QUESTION\":\"Versi aptra yang terinstall\",\"ANSWER\":\"\",\"CHOICE\": []},{\"ID\":2,\"TYPE\":\"ANSWER\",\"QUESTION\":\"Software distribusi\",\"ANSWER\":\"\",\"CHOICE\": []},{\"ID\": 3,\"TYPE\": \"\",\"QUESTION\": \"Kondisi AC\",\"ANSWER\": \"\",\"CHOICE\": []}]','2023-04-01','[\"1\",\"2\",\"5\"]','[\"2\",\"3\",\"4\"]','[\"1\",\"2\"]','[\"1\",\"5\"]',1,'2023-04-03 04:57:32',1),
 (4,'frm.230402.0004','maintenance service','[{\"ID\": 1,\"TYPE\": \"CHOICE\",\"QUESTION\": \"choice test\",\"ANSWER\": \"\",\"CHOICE\": [{\"ID_CHOICE\": 1,\"CHOICE_CONTENT\": \"c1\"},{\"ID_CHOICE\": 2,\"CHOICE_CONTENT\": \"c2\"},{\"ID_CHOICE\": 3,\"CHOICE_CONTENT\": \"c3\"}]},{\"ID\": 2,\"TYPE\": \"ANSWER\",\"QUESTION\": \"answer test\",\"ANSWER\": \"\",\"CHOICE\": []}]','2023-04-03','[\"1\",\"2\",\"7\",\"5\",\"6\"]','[\"4\"]','[\"2\",\"3\"]','[\"4\",\"5\"]',1,'2023-04-03 22:01:55',1);
+
+/*Table structure for table `trx_record_latlong` */
+
+DROP TABLE IF EXISTS `trx_record_latlong`;
+
+CREATE TABLE `trx_record_latlong` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) DEFAULT NULL,
+  `id_machine` int(11) DEFAULT NULL,
+  `latlong_start` varchar(255) DEFAULT NULL,
+  `latlong_end` varchar(255) DEFAULT NULL,
+  `date_time_start` datetime DEFAULT NULL,
+  `date_time_end` datetime DEFAULT NULL,
+  `distance_estimation` varchar(255) DEFAULT NULL,
+  `time_estimation` varchar(255) DEFAULT NULL,
+  `duration_actual` varchar(255) DEFAULT NULL,
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `trx_record_latlong` */
+
+insert  into `trx_record_latlong`(`id`,`id_user`,`id_machine`,`latlong_start`,`latlong_end`,`date_time_start`,`date_time_end`,`distance_estimation`,`time_estimation`,`duration_actual`) values 
+(1,1,2,'-6.298337, 107.017022','-6.296297451354148, 106.97915193060103','2023-04-11 23:45:02',NULL,'4191.49','6.29',NULL);
 
 /*Table structure for table `users` */
 
